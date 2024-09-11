@@ -20,7 +20,7 @@
 	export let propagate: boolean | undefined = undefined;
 	export let userCursorColor: string | undefined = undefined;
 	export let zIndex: number | undefined = undefined;
-	export let spaceId: string | undefined = `cursors-space-default--${String(room.type)}-${room.id}`
+	export let spaceId: string | undefined = `cursors-space-default--${String(room.type)}-${room.id}`;
 
 	const cursorsPresence = room.usePresence({
 		keys: [spaceId]
@@ -75,32 +75,34 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
 <svelte:element
-  this={as}
-  on:mousemove={onMouseMove}
-  on:mouseout={onMouseOut}
-  style="position: relative;"
+	this={as}
+	on:mousemove={onMouseMove}
+	on:mouseout={onMouseOut}
+	style="position: relative;"
 >
-  <slot />
-  <div style="{absStyles} {inertStyles} z-index: {zIndex !== undefined ? zIndex : defaultZ};">
-    {#each Object.entries($cursorsPresence.peers) as [id, presence]}
-      {#if presence[spaceId]}
-        {@const cursor = presence[spaceId]}
-        <div style="
+	<slot />
+	<div style="{absStyles} {inertStyles} z-index: {zIndex !== undefined ? zIndex : defaultZ};">
+		{#each Object.entries($cursorsPresence.peers) as [id, presence]}
+			{#if presence[spaceId]}
+				{@const cursor = presence[spaceId]}
+				<div
+					style="
           position: absolute;
           top: 0;
           left: 0;
           transform: translate({cursor.xPercent}%, {cursor.yPercent}%);
           transform-origin: 0 0;
           transition: transform 100ms;
-        ">
-          <slot
-            name="renderCursor"
-            props={{ color: cursor.color, presence: fullPresence.peers[id] }}
-          >
-            <Cursor {...cursor} />
-          </slot>
-        </div>
-      {/if}
-    {/each}
-  </div>
+        "
+				>
+					<slot
+						name="renderCursor"
+						props={{ color: cursor.color, presence: fullPresence.peers[id] }}
+					>
+						<Cursor {...cursor} />
+					</slot>
+				</div>
+			{/if}
+		{/each}
+	</div>
 </svelte:element>

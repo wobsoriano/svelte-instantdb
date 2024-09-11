@@ -19,7 +19,7 @@ import {
 import { InstantSvelte } from './InstantSvelte.js';
 import { InstantSvelteWeb } from './InstantSvelteWeb.js';
 import { init, init_experimental } from './init.js';
-import Cursors from "./Cursors.svelte";
+import Cursors from './Cursors.svelte';
 
 export {
 	id,
