@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { init, tx, id, Cursors } from '$lib/index.js';
+	import { PUBLIC_INSTANT_APP_ID } from '$env/static/public'
 
-	const APP_ID = '371c8307-e5a5-46d3-9f62-d8d2a02bd0c3';
+	const APP_ID = PUBLIC_INSTANT_APP_ID;
 
 	// Optional: Declare your schema for intellisense!
 	type Schema = {
@@ -64,7 +65,3 @@
 		{/each}
 	</ul>
 {/if}
-
-<Cursors room={db.room()} userCursorColor="tomato">
-	<div>hello</div>
-</Cursors>

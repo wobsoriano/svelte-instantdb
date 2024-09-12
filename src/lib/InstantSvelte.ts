@@ -207,23 +207,13 @@ export class InstantSvelteRoom<
 	): TypingIndicatorHandle<RoomSchema[RoomType]['presence']> => {
 		const timeout = useTimeout();
 
-		const onservedPresence = this.usePresence({
+		this.usePresence({
 			keys: [inputName]
 		});
 
-		// const active = useMemo(() => {
-		// 	const presenceSnapshot = this._core._reactor.getPresence(this.type, this.id);
-
-		// 	return opts?.writeOnly
-		// 		? []
-		// 		: Object.values(presenceSnapshot?.peers ?? {}).filter((p) => p[inputName] === true);
-		// }, [opts?.writeOnly, onservedPresence]);
-
 		// TODO: Make this reactive
-		const presenceSnapshot = this._core._reactor.getPresence(this.type, this.id);
-		const active = Object.values(presenceSnapshot?.peers ?? {}).filter(
-			(p) => p[inputName] === true
-		);
+    const presenceSnapshot = this._core._reactor.getPresence(this.type, this.id);
+    const active = opts?.writeOnly ? [] : Object.values(presenceSnapshot?.peers ?? {}).filter((p) => p[inputName] === true)
 
 		const setActive = (isActive: boolean) => {
 			this._core._reactor.publishPresence(this.type, this.id, {

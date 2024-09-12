@@ -12,6 +12,7 @@
 	export let userCursorColor: string | undefined = undefined;
 	export let zIndex: number | undefined = undefined;
 	export let spaceId: string | undefined = undefined;
+	export let className: string | undefined = undefined;
 
 	$: _spaceId = spaceId || `cursors-space-default--${String(room.type)}-${room.id}`;
 
@@ -61,6 +62,7 @@
 	on:mousemove={onMouseMove}
 	on:mouseout={onMouseOut}
 	style="position: relative;"
+	class={className}
 >
 	<slot />
 	<div style="{absStyles} {inertStyles} z-index: {zIndex !== undefined ? zIndex : defaultZ};">

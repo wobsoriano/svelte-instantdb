@@ -34,6 +34,11 @@ npm install svelte-instantdb
 {/if}
 ```
 
+## Todo
+
+- [ ] Cursors
+- [ ] Typing Indicators
+
 ## License
 
 MIT
