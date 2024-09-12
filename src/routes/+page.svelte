@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { init, tx, id } from '$lib/index.js';
+	import { init, tx, id, Cursors } from '$lib/index.js';
 
 	const APP_ID = '371c8307-e5a5-46d3-9f62-d8d2a02bd0c3';
 
@@ -15,7 +15,11 @@
 
 	const db = init<Schema>({ appId: APP_ID });
 
-	const state = db.useQuery({ todos: {} });
+	let q = {
+		todos: {}
+	};
+
+	$: state = db.useQuery(q);
 
 	let newTodo = '';
 
@@ -41,9 +45,26 @@
 	<form on:submit={addTodo}>
 		<input bind:value={newTodo} placeholder="What needs to be done?" type="text" />
 	</form>
+	<button
+		on:click={() => {
+			q = {
+				todos: {
+					$: {
+						where: {
+							id: 'b20de635-b9ab-4cd6-ad24-366be1304bcf'
+						}
+					}
+				}
+			};
+		}}>Update q</button
+	>
 	<ul>
 		{#each $state.data.todos as todo}
-			<li>{todo.text}</li>
+			<li>{todo.text} - {todo.createdAt}</li>
 		{/each}
 	</ul>
 {/if}
+
+<Cursors room={db.room()} userCursorColor="tomato">
+	<div>hello</div>
+</Cursors>

@@ -13,7 +13,7 @@
 	export let zIndex: number | undefined = undefined;
 	export let spaceId: string | undefined = undefined;
 
-	$: _spaceId = (spaceId || `cursors-space-default--${String(room.type)}-${room.id}`);
+	$: _spaceId = spaceId || `cursors-space-default--${String(room.type)}-${room.id}`;
 
 	const cursorsPresence = room.usePresence({
 		keys: [_spaceId]
@@ -48,19 +48,8 @@
 		} as RoomSchema[RoomType]['presence']);
 	}
 
-	const absStyles = {
-		position: 'absolute',
-		top: 0,
-		left: 0,
-		bottom: 0,
-		right: 0
-	};
-
-	const inertStyles = {
-		overflow: 'hidden',
-		pointerEvents: 'none',
-		userSelect: 'none'
-	};
+	const absStyles = 'position: absolute; top: 0; left: 0; bottom: 0; right: 0;';
+	const inertStyles = 'overflow: hidden; pointer-events: none; user-select: none;';
 
 	const defaultZ = 99999;
 </script>
@@ -88,10 +77,7 @@
                         transition: transform 100ms;
                     "
 				>
-					<slot
-						name="renderCursor"
-						props={{ color: cursor.color, presence: fullPresence.peers[id] }}
-					>
+					<slot name="renderCursor" presence={fullPresence.peers[id]} color={cursor.color}>
 						<Cursor {...cursor} />
 					</slot>
 				</div>

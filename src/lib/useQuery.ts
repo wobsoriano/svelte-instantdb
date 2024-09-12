@@ -13,7 +13,7 @@ import { onMount } from 'svelte';
 
 function stateForResult(result: any) {
 	return {
-		isLoading: !Boolean(result),
+		isLoading: !result,
 		data: undefined,
 		pageInfo: undefined,
 		error: undefined,

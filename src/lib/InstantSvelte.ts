@@ -68,13 +68,13 @@ export class InstantSvelteRoom<
 	 *
 	 * @see https://instantdb.com/docs/presence-and-topics
 	 * @example
-	 *  function App({ roomId }) {
-	 *    db.room(roomType, roomId).useTopicEffect("chat", (message, peer) => {
-	 *      console.log("New message", message, 'from', peer.name);
-	 *    });
+	 * <script>
+	 *   export let roomId;
 	 *
-	 *    // ...
-	 *  }
+	 *   db.room(roomType, roomId).useTopicEffect(topic, (message, peer) => {
+	 *     console.log("New message", message, 'from', peer.name);
+	 *   })
+	 * </script>
 	 */
 	useTopicEffect = <TopicType extends keyof RoomSchema[RoomType]['topics']>(
 		topic: TopicType,
@@ -102,14 +102,16 @@ export class InstantSvelteRoom<
 	 *
 	 * @see https://instantdb.com/docs/presence-and-topics
 	 * @example
-	 * function App({ roomId }) {
-	 *   const publishTopic = db.room(roomType, roomId).usePublishTopic("clicks");
+	 * <script>
+	 *   export let roomId;
+	 *   const room = db.room(roomType, roomId);
+	 *   const publishTopic = room.usePublishTopic("clicks");
+	 *   function handleClick() {
+	 *     publishTopic({ ts: Date.now() });
+	 *   }
+	 * </script>
 	 *
-	 *   return (
-	 *     <button onClick={() => publishTopic({ ts: Date.now() })}>Click me</button>
-	 *   );
-	 * }
-	 *
+	 * <button on:click={handleClick}>Click me</button>
 	 */
 	usePublishTopic = <Topic extends keyof RoomSchema[RoomType]['topics']>(
 		topic: Topic
@@ -133,14 +135,13 @@ export class InstantSvelteRoom<
 	 *
 	 * @see https://instantdb.com/docs/presence-and-topics
 	 * @example
-	 *  function App({ roomId }) {
-	 *    const {
-	 *      peers,
-	 *      publishPresence
-	 *    } = db.room(roomType, roomId).usePresence({ keys: ["name", "avatar"] });
+	 * <script>
+	 *   export let roomId;
 	 *
-	 *    // ...
-	 *  }
+	 *   const { peers, publishPresence } = db.room(roomType, roomId).usePresence({ keys: ["name", "avatar"] });
+	 *
+	 *   // ...
+	 * </script>
 	 */
 	usePresence = <Keys extends keyof RoomSchema[RoomType]['presence']>(
 		opts: PresenceOpts<RoomSchema[RoomType]['presence'], Keys> = {}
@@ -171,11 +172,11 @@ export class InstantSvelteRoom<
 	 *
 	 * @see https://instantdb.com/docs/presence-and-topics
 	 * @example
-	 *  function App({ roomId }) {
-	 *    db.room(roomType, roomId).useSyncPresence({ name, avatar, color });
+	 * <script>
+	 *   export let roomId;
 	 *
-	 *    // ...
-	 *  }
+	 *   db.room(roomType, roomId).useSyncPresence({ name, avatar, color });
+	 * </script>
 	 */
 	useSyncPresence = (data: Partial<RoomSchema[RoomType]['presence']>): void => {
 		onMount(() => {
@@ -188,15 +189,17 @@ export class InstantSvelteRoom<
 	 *
 	 * @see https://instantdb.com/docs/presence-and-topics
 	 * @example
-	 *  function App({ roomId }) {
-	 *    const {
-	 *      active,
-	 *      setActive,
-	 *      inputProps,
-	 *    } = db.room(roomType, roomId).useTypingIndicator("chat-input", opts);
+	 * <script>
+	 *   export let roomId;
 	 *
-	 *    return <input {...inputProps} />;
-	 *  }
+	 *   const {
+	 *     active,
+	 *     setActive,
+	 *     inputProps,
+	 *   } = db.room(roomType, roomId).useTypingIndicator("chat-input", opts);
+	 * </script>
+	 *
+	 * <input {...$inputProps} />
 	 */
 	useTypingIndicator = (
 		inputName: string,
@@ -376,7 +379,7 @@ export abstract class InstantSvelte<
 	 *
 	 * @see https://instantdb.com/docs/auth
 	 * @example
-	 *  <script lang="ts">
+	 *  <script>
 	 *    import { db } from './db';
 	 *    import Main from './Main.svelte';
 	 *    import Login from './Login.svelte';
