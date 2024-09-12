@@ -1,5 +1,11 @@
 # svelte-instantdb
 
+## 0.0.9
+
+### Patch Changes
+
+- 7df76c2: Fix default cursor color
+
 ## 0.0.8
 
 ### Patch Changes
