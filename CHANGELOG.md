@@ -1,5 +1,11 @@
 # svelte-instantdb
 
+## 0.0.8
+
+### Patch Changes
+
+- a3db05e: Fix rooms bug where we were sending events before receiving a join room
+
 ## 0.0.7
 
 ### Patch Changes
