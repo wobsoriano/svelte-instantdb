@@ -1,5 +1,11 @@
 # svelte-instantdb
 
+## 0.0.6
+
+### Patch Changes
+
+- a3a8f31: Add Cursors support
+
 ## 0.0.5
 
 ### Patch Changes
