@@ -1,5 +1,11 @@
 # svelte-instantdb
 
+## 0.0.4
+
+### Patch Changes
+
+- b421e0f: More updates
+
 ## 0.0.3
 
 ### Patch Changes
