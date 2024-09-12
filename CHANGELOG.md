@@ -1,5 +1,11 @@
 # svelte-instantdb
 
+## 0.0.5
+
+### Patch Changes
+
+- ccac0a9: Add svelte 5 support
+
 ## 0.0.4
 
 ### Patch Changes
