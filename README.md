@@ -48,8 +48,8 @@ Custom cursors
 <Cursors {room} userCursorColor="tomato">
 	Move your cursor around! ✨
 
-	<svelte:fragment slot="renderCursor" let:color let:name>
-		<CustomCursor {color} {name} />
+	<svelte:fragment slot="renderCursor" let:color let:presence>
+		<CustomCursor {color} name={presence.name} />
 	</svelte:fragment>
 </Cursors>
 ```
