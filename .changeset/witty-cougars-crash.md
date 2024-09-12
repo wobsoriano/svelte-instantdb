@@ -2,4 +2,4 @@
 'svelte-instantdb': patch
 ---
 
-Improvements and add License
+Add license and improvements

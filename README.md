@@ -25,12 +25,12 @@ npm install svelte-instantdb
 	};
 </script>
 
-{#if $state.isLoading}
+{#if $query.isLoading}
 	<div>Fetching data...</div>
-{:else if $state.error}
-	<div>Error fetching data: {$state.error.message}</div>
+{:else if $query.error}
+	<div>Error fetching data: {$query.error.message}</div>
 {:else}
-	<UI data={$state.data} {addMessage} />
+	<UI data={$query.data} {addMessage} />
 {/if}
 ```
 
