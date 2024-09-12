@@ -2,7 +2,7 @@
 	"name": "svelte-instantdb",
 	"license": "MIT",
 	"packageManager": "pnpm@9.10.0",
-	"version": "0.0.8",
+	"version": "0.0.9",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
