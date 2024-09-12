@@ -1,5 +1,11 @@
 # svelte-instantdb
 
+## 0.0.3
+
+### Patch Changes
+
+- d540ff2: Add license and improvements
+
 ## 0.0.2
 
 ### Patch Changes
