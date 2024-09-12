@@ -1,5 +1,11 @@
 # svelte-instantdb
 
+## 0.0.7
+
+### Patch Changes
+
+- 9eabe84: Better typing indicator support
+
 ## 0.0.6
 
 ### Patch Changes
