@@ -6,24 +6,17 @@
 	type RoomSchema = $$Generic<RoomSchemaShape>;
 	type RoomType = keyof RoomSchema;
 
-	interface $$Props {
-		spaceId?: string;
-		room: InstantSvelteRoom<any, RoomSchema, RoomType>;
-		userCursorColor?: string;
-		as?: string;
-		propagate?: boolean;
-		zIndex?: number;
-	}
-
 	export let as: string | undefined = 'div';
 	export let room: InstantSvelteRoom<any, RoomSchema, RoomType>;
 	export let propagate: boolean | undefined = undefined;
 	export let userCursorColor: string | undefined = undefined;
 	export let zIndex: number | undefined = undefined;
-	export let spaceId: string | undefined = `cursors-space-default--${String(room.type)}-${room.id}`;
+	export let spaceId: string | undefined = undefined;
+
+	$: _spaceId = (spaceId || `cursors-space-default--${String(room.type)}-${room.id}`);
 
 	const cursorsPresence = room.usePresence({
-		keys: [spaceId]
+		keys: [_spaceId]
 	});
 
 	const fullPresence = room._core._reactor.getPresence(room.type, room.id);
@@ -39,7 +32,7 @@
 		const xPercent = ((x - rect.left) / rect.width) * 100;
 		const yPercent = ((y - rect.top) / rect.height) * 100;
 		cursorsPresence.publishPresence({
-			[spaceId]: {
+			[_spaceId]: {
 				x,
 				y,
 				xPercent,
@@ -51,7 +44,7 @@
 
 	function onMouseOut() {
 		cursorsPresence.publishPresence({
-			[spaceId]: undefined
+			[_spaceId]: undefined
 		} as RoomSchema[RoomType]['presence']);
 	}
 
@@ -83,17 +76,17 @@
 	<slot />
 	<div style="{absStyles} {inertStyles} z-index: {zIndex !== undefined ? zIndex : defaultZ};">
 		{#each Object.entries($cursorsPresence.peers) as [id, presence]}
-			{#if presence[spaceId]}
-				{@const cursor = presence[spaceId]}
+			{#if presence[_spaceId]}
+				{@const cursor = presence[_spaceId]}
 				<div
 					style="
-          position: absolute;
-          top: 0;
-          left: 0;
-          transform: translate({cursor.xPercent}%, {cursor.yPercent}%);
-          transform-origin: 0 0;
-          transition: transform 100ms;
-        "
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        transform: translate({cursor.xPercent}%, {cursor.yPercent}%);
+                        transform-origin: 0 0;
+                        transition: transform 100ms;
+                    "
 				>
 					<slot
 						name="renderCursor"
