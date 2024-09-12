@@ -77,17 +77,16 @@ Custom cursors
 	const typing = room.useTypingIndicator('chat');
 
 	function typingInfo(users) {
-    if (users.length === 0) return null;
-    if (users.length === 1) return `${users[0].name} is typing...`;
-    if (users.length === 2)
-      return `${users[0].name} and ${users[1].name} are typing...`;
+		if (users.length === 0) return null;
+		if (users.length === 1) return `${users[0].name} is typing...`;
+		if (users.length === 2) return `${users[0].name} and ${users[1].name} are typing...`;
 
-    return `${users[0].name} and ${users.length - 1} others are typing...`;
-  }
+		return `${users[0].name} and ${users.length - 1} others are typing...`;
+	}
 </script>
 
 <div class="flex h-screen gap-3 p-2">
-    <div key="main" class="flex flex-1 flex-col justify-end">
+    <div class="flex flex-1 flex-col justify-end">
         <textarea
             on:blur={typing.inputProps.onBlur}
             on:keydown={typing.inputProps.onKeyDown}
