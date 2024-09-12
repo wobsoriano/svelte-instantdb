@@ -17,7 +17,7 @@ npm install svelte-instantdb
 	import { init, tx, id } from 'svelte-instantdb';
 
 	const db = init({
-		appId: 'YOUR_APP_ID'
+		appId: '__YOUR_APP_ID__'
 	});
 
 	const query = db.useQuery({ messages: {} });
@@ -54,9 +54,55 @@ Custom cursors
 </Cursors>
 ```
 
+### Typing indicator
+
+```svelte
+<script lang="ts">
+	// Init schema and db
+	// ...
+
+	const room = db.room('chat', 'main');
+
+	// 1. Publish your presence in the room
+	const { publishPresence } = room.usePresence({
+		peers: [],
+		user: false
+	});
+
+	onMount(() => {
+		publishPresence({ name: 'your_username' });
+	});
+
+	// 2. Use the typing indicator
+	const typing = room.useTypingIndicator('chat');
+
+	function typingInfo(users) {
+    if (users.length === 0) return null;
+    if (users.length === 1) return `${users[0].name} is typing...`;
+    if (users.length === 2)
+      return `${users[0].name} and ${users[1].name} are typing...`;
+
+    return `${users[0].name} and ${users.length - 1} others are typing...`;
+  }
+</script>
+
+<div class="flex h-screen gap-3 p-2">
+    <div key="main" class="flex flex-1 flex-col justify-end">
+        <textarea
+            on:blur={typing.inputProps.onBlur}
+            on:keydown={typing.inputProps.onKeyDown}
+            placeholder="Compose your message here..."
+            class="w-full rounded-md border-gray-300 p-2 text-sm"
+        />
+        <div class="truncate text-xs text-gray-500">
+            {typing.$active.length ? typingInfo(typing.$active) : <>&nbsp;</>}
+        </div>
+    </div>
+</div>
+```
+
 ## Todo
 
-- [ ] Typing Indicators
 - [ ] Docs
 
 ## License

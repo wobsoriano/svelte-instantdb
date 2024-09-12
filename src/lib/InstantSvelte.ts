@@ -21,7 +21,7 @@ import {
 } from '@instantdb/core';
 import { useQuery } from './useQuery.js';
 import { useTimeout } from './useTimeout.js';
-import { writable, type Readable } from 'svelte/store';
+import { derived, writable, type Readable } from 'svelte/store';
 import { onMount } from 'svelte';
 
 export type PresenceHandle<PresenceShape, Keys extends keyof PresenceShape> = Readable<
@@ -38,7 +38,7 @@ export type TypingIndicatorOpts = {
 };
 
 export type TypingIndicatorHandle<PresenceShape> = {
-	active: PresenceShape[];
+	active: Readable<PresenceShape[]>;
 	setActive(active: boolean): void;
 	inputProps: {
 		onKeyDown: (e: KeyboardEvent) => void;
@@ -207,15 +207,16 @@ export class InstantSvelteRoom<
 	): TypingIndicatorHandle<RoomSchema[RoomType]['presence']> => {
 		const timeout = useTimeout();
 
-		this.usePresence({
+		const onservedPresence = this.usePresence({
 			keys: [inputName]
 		});
 
-		// TODO: Make this reactive
-		const presenceSnapshot = this._core._reactor.getPresence(this.type, this.id);
-		const active = opts?.writeOnly
-			? []
-			: Object.values(presenceSnapshot?.peers ?? {}).filter((p) => p[inputName] === true);
+		const active = derived(onservedPresence, () => {
+			const presenceSnapshot = this._core._reactor.getPresence(this.type, this.id);
+			return opts?.writeOnly
+				? []
+				: Object.values(presenceSnapshot?.peers ?? {}).filter((p) => p[inputName] === true);
+		});
 
 		const setActive = (isActive: boolean) => {
 			this._core._reactor.publishPresence(this.type, this.id, {
