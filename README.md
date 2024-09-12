@@ -86,17 +86,17 @@ Custom cursors
 </script>
 
 <div class="flex h-screen gap-3 p-2">
-    <div class="flex flex-1 flex-col justify-end">
-        <textarea
-            on:blur={typing.inputProps.onBlur}
-            on:keydown={typing.inputProps.onKeyDown}
-            placeholder="Compose your message here..."
-            class="w-full rounded-md border-gray-300 p-2 text-sm"
-        />
-        <div class="truncate text-xs text-gray-500">
-            {typing.$active.length ? typingInfo(typing.$active) : <>&nbsp;</>}
-        </div>
-    </div>
+	<div class="flex flex-1 flex-col justify-end">
+		<textarea
+			on:blur={typing.inputProps.onBlur}
+			on:keydown={typing.inputProps.onKeyDown}
+			placeholder="Compose your message here..."
+			class="w-full rounded-md border-gray-300 p-2 text-sm"
+		/>
+		<div class="truncate text-xs text-gray-500">
+			{typing.$active.length ? typingInfo(typing.$active) : <>&nbsp;</>}
+		</div>
+	</div>
 </div>
 ```
 

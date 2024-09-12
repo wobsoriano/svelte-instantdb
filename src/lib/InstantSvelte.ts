@@ -180,7 +180,10 @@ export class InstantSvelteRoom<
 	 */
 	useSyncPresence = (data: Partial<RoomSchema[RoomType]['presence']>): void => {
 		onMount(() => {
-			return this._core._reactor.publishPresence(this.type, this.id, data);
+			const joinRoomUnsub = this._core._reactor.joinRoom(this.id);
+			this._core._reactor.publishPresence(this.type, this.id, data);
+
+			return joinRoomUnsub;
 		});
 	};
 
