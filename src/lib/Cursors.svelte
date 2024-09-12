@@ -13,8 +13,9 @@
 	export let zIndex: number | undefined = undefined;
 	export let spaceId: string | undefined = undefined;
 	export let className: string | undefined = undefined;
+	export let style: string | undefined = undefined;
 
-	$: _spaceId = spaceId || `cursors-space-default--${String(room.type)}-${room.id}`;
+	const _spaceId = spaceId || `cursors-space-default--${String(room.type)}-${room.id}`;
 
 	const cursorsPresence = room.usePresence({
 		keys: [_spaceId]
@@ -61,7 +62,7 @@
 	this={as}
 	on:mousemove={onMouseMove}
 	on:mouseout={onMouseOut}
-	style="position: relative;"
+	style="position: relative; {style}"
 	class={className}
 >
 	<slot />
@@ -71,9 +72,7 @@
 				{@const cursor = presence[_spaceId]}
 				<div
 					style="
-                        position: absolute;
-                        top: 0;
-                        left: 0;
+                        {absStyles}
                         transform: translate({cursor.xPercent}%, {cursor.yPercent}%);
                         transform-origin: 0 0;
                         transition: transform 100ms;

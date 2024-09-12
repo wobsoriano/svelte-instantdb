@@ -10,6 +10,8 @@ npm install svelte-instantdb
 
 ## Usage
 
+### Reading and Writing Data
+
 ```svelte
 <script>
 	import { init, tx, id } from 'svelte-instantdb';
@@ -34,10 +36,28 @@ npm install svelte-instantdb
 {/if}
 ```
 
+### Cursors
+
+```svelte
+<Cursors {room} userCursorColor="tomato">Move your cursor around! ✨</Cursors>
+```
+
+Custom cursors
+
+```svelte
+<Cursors {room} userCursorColor="tomato">
+	Move your cursor around! ✨
+
+	<svelte:fragment slot="renderCursor" let:color let:name>
+		<CustomCursor {color} {name} />
+	</svelte:fragment>
+</Cursors>
+```
+
 ## Todo
 
-- [ ] Cursors
 - [ ] Typing Indicators
+- [ ] Docs
 
 ## License
 

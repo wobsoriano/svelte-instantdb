@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { init, tx, id, Cursors } from '$lib/index.js';
-	import { env } from '$env/dynamic/public'
+	import { env } from '$env/dynamic/public';
 
 	const APP_ID = env.PUBLIC_INSTANT_APP_ID;
 

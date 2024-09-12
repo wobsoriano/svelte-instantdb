@@ -148,8 +148,6 @@ export class InstantSvelteRoom<
 	): PresenceHandle<RoomSchema[RoomType]['presence'], Keys> => {
 		const { subscribe, set } = writable<PresenceResponse<RoomSchema[RoomType]['presence'], Keys>>(
 			this._core._reactor.getPresence(this.type, this.id, opts) ?? {
-			  user: undefined,
-				error: undefined,
 				peers: {},
 				isLoading: true
 			}
@@ -214,8 +212,10 @@ export class InstantSvelteRoom<
 		});
 
 		// TODO: Make this reactive
-    const presenceSnapshot = this._core._reactor.getPresence(this.type, this.id);
-    const active = opts?.writeOnly ? [] : Object.values(presenceSnapshot?.peers ?? {}).filter((p) => p[inputName] === true)
+		const presenceSnapshot = this._core._reactor.getPresence(this.type, this.id);
+		const active = opts?.writeOnly
+			? []
+			: Object.values(presenceSnapshot?.peers ?? {}).filter((p) => p[inputName] === true);
 
 		const setActive = (isActive: boolean) => {
 			this._core._reactor.publishPresence(this.type, this.id, {
