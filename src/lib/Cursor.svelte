@@ -1,7 +1,7 @@
 <script lang="ts">
 	const size = 35;
 
-	export let fill: string = 'black';
+	export let color: string = 'black';
 </script>
 
 <svg
@@ -18,7 +18,7 @@
 		<path d="m12 24.4219v-16.015l11.591 11.619h-6.781l-.411.124z" />
 		<path d="m21.0845 25.0962-3.605 1.535-4.682-11.089 3.686-1.553z" />
 	</g>
-	<g {fill} transform="matrix(1, 0, 0, 1, -11.999999046325684, -8.406899452209473)">
+	<g fill={color} transform="matrix(1, 0, 0, 1, -11.999999046325684, -8.406899452209473)">
 		<path d="m19.751 24.4155-1.844.774-3.1-7.374 1.841-.775z" />
 		<path d="m13 10.814v11.188l2.969-2.866.428-.139h4.768z" />
 	</g>

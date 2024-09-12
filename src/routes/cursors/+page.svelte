@@ -4,14 +4,20 @@
 
 	const APP_ID = env.PUBLIC_INSTANT_APP_ID;
 
-	const db = init<
-		{},
-		{
-			'cursors-example': {};
-		}
-	>({ appId: APP_ID });
+	type Schema = {
+  user: { name: string };
+}
 
-	const room = db.room('cursors-example', '123');
+// Provide a room schema to get typings for presence!
+type RoomSchema = {
+  chat: {
+    presence: { name: string };
+  };
+}
+
+	const db = init<Schema, RoomSchema>({ appId: APP_ID });
+
+	const room = db.room('chat', 'main');
 
 	const randomDarkColor =
 		'#' +
