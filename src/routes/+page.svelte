@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { init, tx, id, Cursors } from '$lib/index.js';
-	import { PUBLIC_INSTANT_APP_ID } from '$env/static/public'
+	import { env } from '$env/dynamic/public'
 
-	const APP_ID = PUBLIC_INSTANT_APP_ID;
+	const APP_ID = env.PUBLIC_INSTANT_APP_ID;
 
 	// Optional: Declare your schema for intellisense!
 	type Schema = {

@@ -148,6 +148,8 @@ export class InstantSvelteRoom<
 	): PresenceHandle<RoomSchema[RoomType]['presence'], Keys> => {
 		const { subscribe, set } = writable<PresenceResponse<RoomSchema[RoomType]['presence'], Keys>>(
 			this._core._reactor.getPresence(this.type, this.id, opts) ?? {
+			  user: undefined,
+				error: undefined,
 				peers: {},
 				isLoading: true
 			}
