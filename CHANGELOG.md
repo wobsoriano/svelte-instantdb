@@ -1,5 +1,11 @@
 # svelte-instantdb
 
+## 0.0.10
+
+### Patch Changes
+
+- d75830a: Update package.json links
+
 ## 0.0.9
 
 ### Patch Changes
