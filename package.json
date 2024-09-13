@@ -1,6 +1,12 @@
 {
 	"name": "svelte-instantdb",
 	"license": "MIT",
+	"homepage": "https://github.com/wobsoriano/svelte-instantdb#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wobsoriano/svelte-instantdb.git"
+  },
+  "bugs": "https://github.com/wobsoriano/svelte-instantdb/issues",
 	"packageManager": "pnpm@9.10.0",
 	"version": "0.0.9",
 	"scripts": {
