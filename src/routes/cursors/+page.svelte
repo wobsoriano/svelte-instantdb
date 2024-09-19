@@ -5,15 +5,15 @@
 	const APP_ID = env.PUBLIC_INSTANT_APP_ID;
 
 	type Schema = {
-  user: { name: string };
-}
+		user: { name: string };
+	};
 
-// Provide a room schema to get typings for presence!
-type RoomSchema = {
-  chat: {
-    presence: { name: string };
-  };
-}
+	// Provide a room schema to get typings for presence!
+	type RoomSchema = {
+		chat: {
+			presence: { name: string };
+		};
+	};
 
 	const db = init<Schema, RoomSchema>({ appId: APP_ID });
 

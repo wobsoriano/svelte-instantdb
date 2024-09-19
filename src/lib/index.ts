@@ -13,7 +13,8 @@ import {
 	type User,
 	type AuthState,
 	type Query,
-	type Config
+	type Config,
+	type InstaQLQueryParams
 } from '@instantdb/core';
 
 import { InstantSvelte } from './InstantSvelte.js';
@@ -43,5 +44,6 @@ export {
 	type AuthState,
 	type InstantQuery,
 	type InstantQueryResult,
-	type InstantSchema
+	type InstantSchema,
+	type InstaQLQueryParams
 };
