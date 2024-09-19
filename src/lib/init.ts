@@ -1,8 +1,8 @@
-import {
+import type {
 	// types
-	type Config,
-	i,
-	type RoomSchemaShape
+	Config,
+	InstantGraph,
+	RoomSchemaShape
 } from '@instantdb/core';
 import { InstantSvelteWeb } from './InstantSvelteWeb.js';
 
@@ -31,7 +31,7 @@ export function init<Schema = {}, RoomSchema extends RoomSchemaShape = {}>(confi
 }
 
 export function init_experimental<
-	Schema extends i.InstantGraph<any, any, any>,
+	Schema extends InstantGraph<any, any, any>,
 	WithCardinalityInference extends boolean = true
 >(
 	config: Config & {
@@ -41,7 +41,7 @@ export function init_experimental<
 ) {
 	return new InstantSvelteWeb<
 		Schema,
-		Schema extends i.InstantGraph<any, any, infer RoomSchema> ? RoomSchema : never,
+		Schema extends InstantGraph<any, any, infer RoomSchema> ? RoomSchema : never,
 		WithCardinalityInference
 	>(config);
 }

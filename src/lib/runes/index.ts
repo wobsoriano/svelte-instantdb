@@ -1,1 +1,1 @@
-export { toStateRune } from './store.svelte.js'
+export { toStateRune } from './store.svelte.js';

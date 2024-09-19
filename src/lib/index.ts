@@ -14,7 +14,21 @@ import {
 	type AuthState,
 	type Query,
 	type Config,
-	type InstaQLQueryParams
+	type InstaQLQueryParams,
+
+	// schema types
+	type AttrsDefs,
+	type CardinalityKind,
+	type DataAttrDef,
+	type EntitiesDef,
+	type EntitiesWithLinks,
+	type EntityDef,
+	type InstantGraph,
+	type LinkAttrDef,
+	type LinkDef,
+	type LinksDef,
+	type ResolveAttrs,
+	type ValueTypes
 } from '@instantdb/core';
 
 import { InstantSvelte } from './InstantSvelte.js';
@@ -45,5 +59,19 @@ export {
 	type InstantQuery,
 	type InstantQueryResult,
 	type InstantSchema,
-	type InstaQLQueryParams
+	type InstaQLQueryParams,
+
+	// schema types
+	type AttrsDefs,
+	type CardinalityKind,
+	type DataAttrDef,
+	type EntitiesDef,
+	type EntitiesWithLinks,
+	type EntityDef,
+	type InstantGraph,
+	type LinkAttrDef,
+	type LinkDef,
+	type LinksDef,
+	type ResolveAttrs,
+	type ValueTypes
 };
