@@ -1,5 +1,11 @@
 # svelte-instantdb
 
+## 0.1.1
+
+### Patch Changes
+
+- 13d5721: Make db functions accept reactive values
+
 ## 0.1.0
 
 ### Minor Changes
