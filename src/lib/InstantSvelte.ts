@@ -5,7 +5,6 @@ import {
 	Storage,
 	txInit,
 	_init_internal,
-	i,
 	type AuthState,
 	type Config,
 	type Query,
@@ -17,12 +16,14 @@ import {
 	type RoomSchemaShape,
 	type InstaQLQueryParams,
 	type ConfigWithSchema,
-	type IDatabase
+	type IDatabase,
+	type InstantGraph
 } from '@instantdb/core';
 import { useQuery } from './useQuery.js';
 import { useTimeout } from './useTimeout.js';
-import { derived, writable, type Readable } from 'svelte/store';
+import { derived, readable, type Readable } from 'svelte/store';
 import { onMount } from 'svelte';
+import { browser } from '$app/environment';
 
 export type PresenceHandle<PresenceShape, Keys extends keyof PresenceShape> = Readable<
 	PresenceResponse<PresenceShape, Keys>
@@ -146,21 +147,22 @@ export class InstantSvelteRoom<
 	usePresence = <Keys extends keyof RoomSchema[RoomType]['presence']>(
 		opts: PresenceOpts<RoomSchema[RoomType]['presence'], Keys> = {}
 	): PresenceHandle<RoomSchema[RoomType]['presence'], Keys> => {
-		const { subscribe, set } = writable<PresenceResponse<RoomSchema[RoomType]['presence'], Keys>>(
+		const presence = readable<PresenceResponse<RoomSchema[RoomType]['presence'], Keys>>(
 			this._core._reactor.getPresence(this.type, this.id, opts) ?? {
 				peers: {},
 				isLoading: true
+			},
+			(set) => {
+				if (browser) {
+					return this._core._reactor.subscribePresence(this.type, this.id, opts, (data) => {
+						set(data);
+					});
+				}
 			}
 		);
 
-		onMount(() => {
-			return this._core._reactor.subscribePresence(this.type, this.id, opts, (data) => {
-				set(data);
-			});
-		});
-
 		return {
-			subscribe,
+			subscribe: presence.subscribe,
 			publishPresence: (data) => {
 				this._core._reactor.publishPresence(this.type, this.id, data);
 			}
@@ -258,13 +260,13 @@ export class InstantSvelteRoom<
 }
 
 export abstract class InstantSvelte<
-	Schema extends i.InstantGraph<any, any> | {} = {},
+	Schema extends InstantGraph<any, any> | {} = {},
 	RoomSchema extends RoomSchemaShape = {},
 	WithCardinalityInference extends boolean = false
 > implements IDatabase<Schema, RoomSchema, WithCardinalityInference>
 {
 	public withCardinalityInference?: WithCardinalityInference;
-	public tx = txInit<Schema extends i.InstantGraph<any, any> ? Schema : i.InstantGraph<any, any>>();
+	public tx = txInit<Schema extends InstantGraph<any, any> ? Schema : InstantGraph<any, any>>();
 
 	public auth: Auth;
 	public storage: Storage;
@@ -358,9 +360,7 @@ export abstract class InstantSvelte<
 	 *  db.useQuery(auth.user ? { goals: {} } : null)
 	 */
 	useQuery = <
-		Q extends Schema extends i.InstantGraph<any, any>
-			? InstaQLQueryParams<Schema>
-			: Exactly<Query, Q>
+		Q extends Schema extends InstantGraph<any, any> ? InstaQLQueryParams<Schema> : Exactly<Query, Q>
 	>(
 		query: null | Q
 	): Readable<LifecycleSubscriptionState<Q, Schema, WithCardinalityInference>> => {
@@ -395,16 +395,14 @@ export abstract class InstantSvelte<
 	 *
 	 */
 	useAuth = (): Readable<AuthState> => {
-		const { subscribe, set } = writable<AuthState>(this._core._reactor._currentUserCached);
-
-		onMount(() => {
-			return this._core.subscribeAuth((auth) => {
-				set({ isLoading: false, ...auth });
-			});
+		const authState = readable<AuthState>(this._core._reactor._currentUserCached, (set) => {
+			if (browser) {
+				return this._core.subscribeAuth((auth) => {
+					set({ isLoading: false, ...auth });
+				});
+			}
 		});
 
-		return {
-			subscribe
-		};
+		return authState;
 	};
 }

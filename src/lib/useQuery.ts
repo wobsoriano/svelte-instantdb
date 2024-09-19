@@ -2,14 +2,14 @@ import {
 	coerceQuery,
 	type Query,
 	type Exactly,
-	InstantClient,
+	type InstantClient,
 	type LifecycleSubscriptionState,
 	type InstaQLQueryParams,
-	i
+	type InstantGraph
 } from '@instantdb/core';
 
-import { writable, type Readable } from 'svelte/store';
-import { onMount } from 'svelte';
+import { readable, type Readable } from 'svelte/store';
+import { browser } from '$app/environment';
 
 function stateForResult(result: any) {
 	return {
@@ -22,9 +22,7 @@ function stateForResult(result: any) {
 }
 
 export function useQuery<
-	Q extends Schema extends i.InstantGraph<any, any>
-		? InstaQLQueryParams<Schema>
-		: Exactly<Query, Q>,
+	Q extends Schema extends InstantGraph<any, any> ? InstaQLQueryParams<Schema> : Exactly<Query, Q>,
 	Schema,
 	WithCardinalityInference extends boolean
 >(
@@ -35,18 +33,20 @@ export function useQuery<
 	query: any;
 } {
 	const query = _query ? coerceQuery(_query) : null;
-	const { subscribe, set } = writable<
-		LifecycleSubscriptionState<Q, Schema, WithCardinalityInference>
-	>(stateForResult(_core._reactor.getPreviousResult(query)));
 
-	onMount(() => {
-		return _core.subscribeQuery<Q>(query, (result) => {
-			set(stateForResult(result));
-		});
-	});
+	const state = readable<LifecycleSubscriptionState<Q, Schema, WithCardinalityInference>>(
+		stateForResult(_core._reactor.getPreviousResult(query)),
+		(set) => {
+			if (browser) {
+				return _core.subscribeQuery<Q>(query, (result) => {
+					set(stateForResult(result));
+				});
+			}
+		}
+	);
 
 	return {
-		state: { subscribe },
+		state,
 		query
 	};
 }

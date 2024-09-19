@@ -16,11 +16,17 @@
 
 	const db = init<Schema>({ appId: APP_ID });
 
-	let q = {
-		todos: {}
-	};
+	let todoId = '9cd88cf8-e2ac-45df-b683-ba7a025cd8dc';
 
-	$: state = db.useQuery(q);
+	$: state = db.useQuery({
+		todos: {
+			$: {
+				where: {
+					id: todoId
+				}
+			}
+		}
+	});
 
 	let newTodo = '';
 
@@ -48,15 +54,12 @@
 	</form>
 	<button
 		on:click={() => {
-			q = {
-				todos: {
-					$: {
-						where: {
-							id: 'b20de635-b9ab-4cd6-ad24-366be1304bcf'
-						}
-					}
-				}
-			};
+			const ids = [
+				'8877544a-6c99-41a4-85bf-328fa5cc3435',
+				'3a938523-2db8-4ecd-8dc6-59a3453bf7d2',
+				'6d0d8e51-702d-4f3b-bfb2-a0298c41f54a'
+			];
+			todoId = ids[Math.floor(Math.random() * ids.length)];
 		}}>Update q</button
 	>
 	<ul>
@@ -64,4 +67,5 @@
 			<li>{todo.text} - {todo.createdAt}</li>
 		{/each}
 	</ul>
+	<a href="/cursors">Cursors page</a>
 {/if}

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { init, tx, id } from '$lib/index.js';
 	import { env } from '$env/dynamic/public';
-	import { toStateRune } from '$lib/runes/index.js'
+	import { toStateRune } from '$lib/runes/index.js';
 
 	const APP_ID = env.PUBLIC_INSTANT_APP_ID;
 
