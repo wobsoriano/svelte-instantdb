@@ -8,7 +8,7 @@
 	},
 	"bugs": "https://github.com/wobsoriano/svelte-instantdb/issues",
 	"packageManager": "pnpm@9.10.0",
-	"version": "0.0.11",
+	"version": "0.1.0",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
@@ -27,8 +27,8 @@
 			"svelte": "./dist/index.js"
 		},
 		"./runes": {
-		  "types": "./dist/runes/index.d.ts",
-      "svelte": "./dist/runes/index.js"
+			"types": "./dist/runes/index.d.ts",
+			"svelte": "./dist/runes/index.js"
 		}
 	},
 	"files": [
