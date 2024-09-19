@@ -1,5 +1,11 @@
 # svelte-instantdb
 
+## 0.1.0
+
+### Minor Changes
+
+- 65cb845: Add Svelte 5 rune support
+
 ## 0.0.11
 
 ### Patch Changes
