@@ -100,31 +100,34 @@ Custom cursors
 </div>
 ```
 
+### Reactive variables
+
+```ts
+let todoId = 'some_id'
+
+$: state = db.useQuery({
+	todos: {
+		$: {
+			where: {
+				id: todoId
+			}
+		}
+	}
+})
+
+todoId = 'another_id'
+```
+
 ### Svelte 5 Runes
 
-```svelte
-<script>
-	import { init, tx, id } from 'svelte-instantdb';
-	import { toStateRune } from 'svelte-instantdb/runes';
+```ts
+import { toStateRune } from 'svelte-instantdb/runes';
 
-	const db = init({
-		appId: '__YOUR_APP_ID__'
-	});
+const query = toStateRune(db.useQuery({ messages: {} }));
 
-	const query = toStateRune(db.useQuery({ messages: {} }));
-
-	const addMessage = (message) => {
-		db.transact(tx.messages[id()].update(message));
-	};
-</script>
-
-{#if query.current.isLoading}
-	<div>Fetching data...</div>
-{:else if query.current.error}
-	<div>Error fetching data: {query.current.error.message}</div>
-{:else}
-	<UI data={query.current.data} {addMessage} />
-{/if}
+// query.current.isLoading
+// query.current.data
+// query.current.error
 ```
 
 ## Todo
