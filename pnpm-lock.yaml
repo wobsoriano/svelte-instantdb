@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@instantdb/core':
-        specifier: ^0.13.2
-        version: 0.13.2
+        specifier: ^0.14.0
+        version: 0.14.0
     devDependencies:
       '@changesets/cli':
         specifier: ^2.27.8
@@ -308,8 +308,8 @@ packages:
     resolution: {integrity: sha512-d2CGZR2o7fS6sWB7DG/3a95bGKQyHMACZ5aW8qGkkqQpUoZV6C0X7Pc7l4ZNMZkfNBf4VWNe9E1jRsf0G146Ew==}
     engines: {node: '>=18.18'}
 
-  '@instantdb/core@0.13.2':
-    resolution: {integrity: sha512-4CHVHhslD1xzD/9qEGd7wV0J80zryRAsyvL+oT282A8v82KdUsUumBZK/7vhtqwFOOouZSMuyQuPYYH3/X77zw==}
+  '@instantdb/core@0.14.0':
+    resolution: {integrity: sha512-UoY8Dm5m/JWW4kxIWpyExIqGo49wrNhc5vWL27hAzETGtqIVFLqHXDvS1K65z+F10GQ72Rt1hdZ2RXt8iu7Y0w==}
 
   '@jridgewell/gen-mapping@0.3.5':
     resolution: {integrity: sha512-IzL8ZoEDIBRWEzlCcRhOaCupYyN5gdIK+Q6fbFdPDg6HqX6jpkItn7DFIpW9LQzXG6Df9sA7+OKnq0qlz/GaQg==}
@@ -914,9 +914,6 @@ packages:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
     engines: {node: '>= 4'}
 
-  immer@9.0.14:
-    resolution: {integrity: sha512-ubBeqQutOSLIFCUBN03jGeOS6a3DoYlSYwYJTa+gSKEZKU5redJIqkIdZ3JVv/4RZpfcXdAWH5zCNLWPRv2WDw==}
-
   import-fresh@3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
     engines: {node: '>=6'}
@@ -1062,6 +1059,10 @@ packages:
 
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
+
+  mutative@1.0.10:
+    resolution: {integrity: sha512-YD4MEleW9vJyIVEItz6x71fWdJ9qea3+R8hxtNiei8cQ7BGLM1c9Q6zCJ7SuLzorBhd2PBHN+xUEwEahxMI34w==}
+    engines: {node: '>=14.0'}
 
   nanoid@3.3.7:
     resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
@@ -1760,9 +1761,9 @@ snapshots:
 
   '@humanwhocodes/retry@0.3.0': {}
 
-  '@instantdb/core@0.13.2':
+  '@instantdb/core@0.14.0':
     dependencies:
-      immer: 9.0.14
+      mutative: 1.0.10
       object-hash: 3.0.0
       uuid: 9.0.1
 
@@ -2413,8 +2414,6 @@ snapshots:
 
   ignore@5.3.2: {}
 
-  immer@9.0.14: {}
-
   import-fresh@3.3.0:
     dependencies:
       parent-module: 1.0.1
@@ -2542,6 +2541,8 @@ snapshots:
   mrmime@2.0.0: {}
 
   ms@2.1.3: {}
+
+  mutative@1.0.10: {}
 
   nanoid@3.3.7: {}
 
