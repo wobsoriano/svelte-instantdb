@@ -103,7 +103,7 @@ Custom cursors
 ### Reactive variables
 
 ```ts
-let todoId = 'some_id'
+let todoId = 'some_id';
 
 $: state = db.useQuery({
 	todos: {
@@ -113,9 +113,9 @@ $: state = db.useQuery({
 			}
 		}
 	}
-})
+});
 
-todoId = 'another_id'
+todoId = 'another_id';
 ```
 
 ### Svelte 5 Runes
