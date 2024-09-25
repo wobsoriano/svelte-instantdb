@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@instantdb/core':
-        specifier: ^0.14.0
-        version: 0.14.0
+        specifier: ^0.14.5
+        version: 0.14.5
     devDependencies:
       '@changesets/cli':
         specifier: ^2.27.8
@@ -308,8 +308,8 @@ packages:
     resolution: {integrity: sha512-d2CGZR2o7fS6sWB7DG/3a95bGKQyHMACZ5aW8qGkkqQpUoZV6C0X7Pc7l4ZNMZkfNBf4VWNe9E1jRsf0G146Ew==}
     engines: {node: '>=18.18'}
 
-  '@instantdb/core@0.14.0':
-    resolution: {integrity: sha512-UoY8Dm5m/JWW4kxIWpyExIqGo49wrNhc5vWL27hAzETGtqIVFLqHXDvS1K65z+F10GQ72Rt1hdZ2RXt8iu7Y0w==}
+  '@instantdb/core@0.14.5':
+    resolution: {integrity: sha512-UAxwiwuG8xDPNdEEi/1btOIdcTLJ1liKStbGC9brVyVwCHt8mDdOouF7+3SqJCE8bA7zPfKRCZO+W38muoMtDA==}
 
   '@jridgewell/gen-mapping@0.3.5':
     resolution: {integrity: sha512-IzL8ZoEDIBRWEzlCcRhOaCupYyN5gdIK+Q6fbFdPDg6HqX6jpkItn7DFIpW9LQzXG6Df9sA7+OKnq0qlz/GaQg==}
@@ -480,6 +480,9 @@ packages:
 
   '@types/node@12.20.55':
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
+
+  '@types/object-hash@3.0.6':
+    resolution: {integrity: sha512-fOBV8C1FIu2ELinoILQ+ApxcUKz4ngq+IWUYrxSGjXzzjUALijilampwkMgEtJ+h2njAW3pi853QpzNVCHB73w==}
 
   '@types/semver@7.5.8':
     resolution: {integrity: sha512-I8EUhyrgfLrcTkzV3TSsGyl1tSuPrEDzr0yd5m90UgNxQkyDXULk3b6MlQqTCpZpNtWe1K0hzclnZkTcLBe2UQ==}
@@ -1761,8 +1764,9 @@ snapshots:
 
   '@humanwhocodes/retry@0.3.0': {}
 
-  '@instantdb/core@0.14.0':
+  '@instantdb/core@0.14.5':
     dependencies:
+      '@types/object-hash': 3.0.6
       mutative: 1.0.10
       object-hash: 3.0.0
       uuid: 9.0.1
@@ -1930,6 +1934,8 @@ snapshots:
   '@types/json-schema@7.0.15': {}
 
   '@types/node@12.20.55': {}
+
+  '@types/object-hash@3.0.6': {}
 
   '@types/semver@7.5.8': {}
 
