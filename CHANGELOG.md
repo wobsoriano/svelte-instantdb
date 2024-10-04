@@ -1,5 +1,13 @@
 # svelte-instantdb
 
+## 0.1.3
+
+### Patch Changes
+
+- ff89838: Export more helper types
+- 53bbf17: Add a new `queryOnce` method which is `useQuery` but returns a promise. Ported from this [PR](https://github.com/instantdb/instant/pull/285).
+- 3e6bfcd: Fix generated types
+
 ## 0.1.2
 
 ### Patch Changes
