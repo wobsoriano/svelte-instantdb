@@ -17,7 +17,9 @@ import {
 	type InstaQLQueryParams,
 	type ConfigWithSchema,
 	type IDatabase,
-	type InstantGraph
+	type InstantGraph,
+	type QueryResponse,
+	type PageInfoResponse
 } from '@instantdb/core';
 import { useQuery } from './useQuery.js';
 import { useTimeout } from './useTimeout.js';
@@ -404,5 +406,29 @@ export abstract class InstantSvelte<
 		});
 
 		return authState;
+	};
+
+	/**
+	 * Use this for one-off queries.
+	 * Returns local data if available, otherwise fetches from the server.
+	 * Because we want to avoid stale data, this method will throw an error
+	 * if the user is offline or there is no active connection to the server.
+	 *
+	 * @see https://instantdb.com/docs/instaql
+	 *
+	 * @example
+	 *
+	 *  const resp = await db.queryOnce({ goals: {} });
+	 *  console.log(resp.data.goals)
+	 */
+	queryOnce = <
+		Q extends Schema extends InstantGraph<any, any> ? InstaQLQueryParams<Schema> : Exactly<Query, Q>
+	>(
+		query: Q
+	): Promise<{
+		data: QueryResponse<Q, Schema, WithCardinalityInference>;
+		pageInfo: PageInfoResponse<Q>;
+	}> => {
+		return this._core.queryOnce(query);
 	};
 }
