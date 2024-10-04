@@ -52,7 +52,7 @@ export type TypingIndicatorHandle<PresenceShape> = {
 export const defaultActivityStopTimeout = 1_000;
 
 export class InstantSvelteRoom<
-	Schema extends InstantGraph<any, any> | Record<string, any>,
+	Schema extends InstantGraph<any, any> | {},
 	RoomSchema extends RoomSchemaShape,
 	RoomType extends keyof RoomSchema
 > {
