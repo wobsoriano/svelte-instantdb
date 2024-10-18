@@ -2,6 +2,9 @@
 
 <ul>
 	<li>
-		<a href="/todos">Todos</a>
+		<a href="/todos">Complete todo list</a>
+	</li>
+	<li>
+	   <a href="/runes">Simple todo list with runes</a>
 	</li>
 </ul>
