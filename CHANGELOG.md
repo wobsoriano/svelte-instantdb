@@ -1,5 +1,12 @@
 # svelte-instantdb
 
+## 0.1.6
+
+### Patch Changes
+
+- 0eb6145: Do not subscribe to query when query is null
+- cf91ba5: Use new generics attribute for Cursors component
+
 ## 0.1.5
 
 ### Patch Changes
