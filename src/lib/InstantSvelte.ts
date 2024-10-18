@@ -26,6 +26,7 @@ import { useTimeout } from './useTimeout.js';
 import { derived, readable, type Readable } from 'svelte/store';
 import { onMount } from 'svelte';
 import { browser } from '$app/environment';
+import { noop } from './utils.js';
 
 export type PresenceHandle<PresenceShape, Keys extends keyof PresenceShape> = Readable<
 	PresenceResponse<PresenceShape, Keys>
@@ -160,6 +161,8 @@ export class InstantSvelteRoom<
 						set(data);
 					});
 				}
+
+        return noop;
 			}
 		);
 
@@ -403,6 +406,8 @@ export abstract class InstantSvelte<
 					set({ isLoading: false, ...auth });
 				});
 			}
+
+      return noop;
 		});
 
 		return authState;

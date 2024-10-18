@@ -10,6 +10,7 @@ import {
 
 import { readable, type Readable } from 'svelte/store';
 import { browser } from '$app/environment';
+import { noop } from './utils.js';
 
 function stateForResult(result: any) {
 	return {
@@ -37,10 +38,9 @@ export function useQuery<
 	const state = readable<LifecycleSubscriptionState<Q, Schema, WithCardinalityInference>>(
 		stateForResult(_core._reactor.getPreviousResult(query)),
 		(set) => {
-			if (!query) {
-				// Don't subscribe if query is null
-				const unsubscribe = () => {};
-				return unsubscribe;
+			if (!query || !browser) {
+				// Don't subscribe if query is null or we're not in the browser
+        return noop;
 			}
 
 			if (browser) {
