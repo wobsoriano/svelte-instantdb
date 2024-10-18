@@ -23,6 +23,22 @@
 	let newTodo = '';
 	let selectedTodo: Todo | null = null;
 
+	// This is just a test code to test reactivity!
+	$: todoState = db.useQuery(
+		selectedTodo
+			? {
+					todos: {
+						$: {
+							where: {
+								id: selectedTodo.id
+							}
+						}
+					}
+				}
+			: null
+	);
+	$: console.log('$todoState', $todoState);
+
 	function addTodo(e: SubmitEvent) {
 		e.preventDefault();
 		db.transact(
@@ -40,7 +56,7 @@
 	}
 
 	function toggleTodo(id: string) {
-	    const isDone = $state.data.todos.find(i => i.id === id).done;
+		const isDone = $state.data.todos.find((i) => i.id === id).done;
 		db.transact(tx.todos[id].update({ done: !isDone }));
 	}
 

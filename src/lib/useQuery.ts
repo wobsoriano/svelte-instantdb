@@ -37,6 +37,12 @@ export function useQuery<
 	const state = readable<LifecycleSubscriptionState<Q, Schema, WithCardinalityInference>>(
 		stateForResult(_core._reactor.getPreviousResult(query)),
 		(set) => {
+			if (!query) {
+				// Don't subscribe if query is null
+				const unsubscribe = () => {};
+				return unsubscribe;
+			}
+
 			if (browser) {
 				return _core.subscribeQuery<Q>(query, (result) => {
 					set(stateForResult(result));
