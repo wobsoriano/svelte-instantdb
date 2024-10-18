@@ -1,9 +1,8 @@
-<script lang="ts">
+<script lang="ts" generics="RoomSchema extends RoomSchemaShape">
 	import { InstantSvelteRoom } from './InstantSvelte.js';
 	import { type RoomSchemaShape } from '@instantdb/core';
 	import Cursor from './Cursor.svelte';
 
-	type RoomSchema = $$Generic<RoomSchemaShape>;
 	type RoomType = keyof RoomSchema;
 
 	export let as: string | undefined = 'div';
