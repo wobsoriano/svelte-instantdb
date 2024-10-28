@@ -205,12 +205,12 @@ export class InstantSvelteRoom<
 			return unsubscribe;
 		});
 
-		const result = $derived.by(() => ({
+		const result = $derived({
 			...state,
 			publishPresence: (data: Partial<RoomSchema[RoomType]['presence']>) => {
 				this._core._reactor.publishPresence(toValue(this.type), toValue(this.id), data);
 			}
-		}));
+		});
 
 		return result;
 	};
@@ -305,7 +305,7 @@ export class InstantSvelteRoom<
 			});
 		};
 
-		const result = $derived.by(() => ({
+		const result = $derived({
 			active,
 			setActive,
 			inputProps: {
@@ -319,7 +319,7 @@ export class InstantSvelteRoom<
 					setActive(false);
 				}
 			}
-		}));
+		});
 
 		return result;
 	};

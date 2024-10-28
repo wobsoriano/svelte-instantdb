@@ -15,7 +15,7 @@
 		spaceId?: string;
 		class?: string;
 		style?: string;
-		children: Snippet;
+		children?: Snippet;
 		cursor?: Snippet<
 			[
 				{
@@ -33,16 +33,16 @@
 		style,
 		userCursorColor,
 		zIndex,
-		spaceId,
+		spaceId: _spaceId,
 		class: className,
 		children,
 		cursor
 	}: Props = $props();
 
-	const _spaceId = $derived(spaceId || `cursors-space-default--${String(room.type)}-${room.id}`);
+	const spaceId = $derived(_spaceId || `cursors-space-default--${String(room.type)}-${room.id}`);
 
 	const cursorsPresence = room.usePresence(() => ({
-		keys: [_spaceId]
+		keys: [spaceId]
 	}));
 
 	const fullPresence = room._core._reactor.getPresence(toValue(room.type), toValue(room.id));
@@ -118,7 +118,7 @@
 	style="position: relative; {style}"
 	class={className}
 >
-	{@render children()}
+	{@render children?.()}
 	<div style="{absStyles} {inertStyles} z-index: {zIndex !== undefined ? zIndex : defaultZ};">
 		{#each Object.entries(cursorsPresence.peers) as [id, presence]}
 			{#if presence[_spaceId]}
@@ -133,7 +133,7 @@
                     "
 				>
 					{#if cursor}
-						{@render cursor?.({ presence: fullPresence.peers[id], color: _cursor.color })}
+						{@render cursor({ presence: fullPresence.peers[id], color: _cursor.color })}
 					{:else}
 						{@render cursorElement(_cursor.color)}
 					{/if}
