@@ -33,7 +33,7 @@ import {
 	type ValueTypes
 } from '@instantdb/core';
 
-import { InstantSvelte } from './InstantSvelte.svelte.js';
+import { InstantSvelte } from './InstantSvelte.js';
 import { InstantSvelteWeb } from './InstantSvelteWeb.js';
 import { init, init_experimental } from './init.js';
 import Cursors from './Cursors.svelte';

@@ -5,9 +5,9 @@
 		<a href="/todos">Complete todo list</a>
 	</li>
 	<li>
-	   <a href="/cursors">Cursor example</a>
+		<a href="/cursors">Cursor example</a>
 	</li>
 	<li>
-	   <a href="/runes">Simple todo list with runes</a>
+		<a href="/runes">Simple todo list with runes</a>
 	</li>
 </ul>
