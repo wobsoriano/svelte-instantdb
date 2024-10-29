@@ -45,6 +45,8 @@
 		keys: [spaceId]
 	}));
 
+	$inspect(cursorsPresence.peers)
+
 	const fullPresence = room._core._reactor.getPresence(toValue(room.type), toValue(room.id));
 
 	function publishCursor(rect: DOMRect, touch: { clientX: number; clientY: number }) {
