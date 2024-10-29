@@ -22,14 +22,9 @@
 
 	const fullPresence = room._core._reactor.getPresence(room.type, room.id);
 
-	function onMouseMove(e: MouseEvent) {
-		if (!propagate) {
-			e.stopPropagation();
-		}
-
-		const rect = (e.currentTarget as any).getBoundingClientRect();
-		const x = e.clientX;
-		const y = e.clientY;
+	function publishCursor(rect: DOMRect, touch: { clientX: number; clientY: number }) {
+		const x = touch.clientX;
+		const y = touch.clientY;
 		const xPercent = ((x - rect.left) / rect.width) * 100;
 		const yPercent = ((y - rect.top) / rect.height) * 100;
 		cursorsPresence.publishPresence({
@@ -43,7 +38,38 @@
 		} as RoomSchema[RoomType]['presence']);
 	}
 
-	function onMouseOut() {
+	function onmousemove(e: MouseEvent) {
+		if (!propagate) {
+			e.stopPropagation();
+		}
+
+		const rect = (e.currentTarget as HTMLInputElement).getBoundingClientRect();
+		publishCursor(rect, e);
+	}
+
+	function onmouseout(_e: MouseEvent) {
+		cursorsPresence.publishPresence({
+			[_spaceId]: undefined
+		} as RoomSchema[RoomType]['presence']);
+	}
+
+	function ontouchmove(e: TouchEvent) {
+		if (e.touches.length !== 1) {
+			return;
+		}
+
+		const touch = e.touches[0];
+
+		if (touch.target instanceof Element) {
+			if (!propagate) {
+				e.stopPropagation();
+			}
+			const rect = touch.target.getBoundingClientRect();
+			publishCursor(rect, touch);
+		}
+	}
+
+	function ontouchend(_e: TouchEvent) {
 		cursorsPresence.publishPresence({
 			[_spaceId]: undefined
 		} as RoomSchema[RoomType]['presence']);
@@ -59,8 +85,10 @@
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
 <svelte:element
 	this={as}
-	on:mousemove={onMouseMove}
-	on:mouseout={onMouseOut}
+	on:mousemove={onmousemove}
+	on:mouseout={onmouseout}
+	on:touchmove={ontouchmove}
+	on:touchend={ontouchend}
 	style="position: relative; {style}"
 	class={className}
 >
