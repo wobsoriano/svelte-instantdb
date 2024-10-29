@@ -45,8 +45,6 @@
 		keys: [spaceId]
 	}));
 
-	$inspect(cursorsPresence.peers)
-
 	const fullPresence = room._core._reactor.getPresence(toValue(room.type), toValue(room.id));
 
 	function publishCursor(rect: DOMRect, touch: { clientX: number; clientY: number }) {
@@ -123,9 +121,8 @@
 	{@render children?.()}
 	<div style="{absStyles} {inertStyles} z-index: {zIndex !== undefined ? zIndex : defaultZ};">
 		{#each Object.entries(cursorsPresence.peers) as [id, presence]}
-			{#if presence[_spaceId]}
-				{@const _cursor = presence[_spaceId]}
-
+			{#if presence[spaceId]}
+				{@const _cursor = presence[spaceId]}
 				<div
 					style="
                         {absStyles}
