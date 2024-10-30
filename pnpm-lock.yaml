@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@instantdb/core':
-        specifier: ^0.14.19
-        version: 0.14.19
+        specifier: ^0.14.22
+        version: 0.14.22
     devDependencies:
       '@changesets/cli':
         specifier: ^2.27.9
@@ -320,8 +320,8 @@ packages:
     resolution: {integrity: sha512-JBxkERygn7Bv/GbN5Rv8Ul6LVknS+5Bp6RgDC/O8gEBU/yeH5Ui5C/OlWrTb6qct7LjjfT6Re2NxB0ln0yYybA==}
     engines: {node: '>=18.18'}
 
-  '@instantdb/core@0.14.19':
-    resolution: {integrity: sha512-GfVwpBI8XcupghZzpZWF6UF4Ikb326goz1a+P78ZF9Vv3nfTd1SVb2JPyQ+1En9ebFbYj61G43Nj76iqrKDdVA==}
+  '@instantdb/core@0.14.22':
+    resolution: {integrity: sha512-MBqxQt6072BbCjzHfmv29R13wcEdKBP3SO+w2YDaBVHS9hczB+hW4JJCcDxLrxJzV/c80cUa5zjTMDYu/6o4yg==}
 
   '@jridgewell/gen-mapping@0.3.5':
     resolution: {integrity: sha512-IzL8ZoEDIBRWEzlCcRhOaCupYyN5gdIK+Q6fbFdPDg6HqX6jpkItn7DFIpW9LQzXG6Df9sA7+OKnq0qlz/GaQg==}
@@ -495,12 +495,15 @@ packages:
 
   '@types/node@12.20.55':
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
-
+    
   '@types/object-hash@3.0.6':
     resolution: {integrity: sha512-fOBV8C1FIu2ELinoILQ+ApxcUKz4ngq+IWUYrxSGjXzzjUALijilampwkMgEtJ+h2njAW3pi853QpzNVCHB73w==}
 
   '@typescript-eslint/eslint-plugin@8.12.0':
     resolution: {integrity: sha512-uRqchEKT0/OwDePTwCjSFO2aH4zccdeQ7DgAzM/8fuXc+PAXvpdMRbuo+oCmK1lSfXssk2UUBNiWihobKxQp/g==}
+
+  '@types/semver@7.5.8':
+    resolution: {integrity: sha512-I8EUhyrgfLrcTkzV3TSsGyl1tSuPrEDzr0yd5m90UgNxQkyDXULk3b6MlQqTCpZpNtWe1K0hzclnZkTcLBe2UQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       '@typescript-eslint/parser': ^8.0.0 || ^8.0.0-alpha.0
@@ -1086,10 +1089,6 @@ packages:
     resolution: {integrity: sha512-263/0NGrn32YFYi4J533qzrQ/krmmrWwhKkzwTuM4f/07ug51odoaNjUexxO4vxlzURHcmYMH1QjvHjsNDKLVg==}
     engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
     hasBin: true
-
-  object-hash@3.0.0:
-    resolution: {integrity: sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==}
-    engines: {node: '>= 6'}
 
   once@1.4.0:
     resolution: {integrity: sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==}
@@ -1766,11 +1765,9 @@ snapshots:
 
   '@humanwhocodes/retry@0.3.1': {}
 
-  '@instantdb/core@0.14.19':
+  '@instantdb/core@0.14.22':
     dependencies:
-      '@types/object-hash': 3.0.6
       mutative: 1.0.10
-      object-hash: 3.0.0
       uuid: 9.0.1
 
   '@jridgewell/gen-mapping@0.3.5':
@@ -1942,6 +1939,9 @@ snapshots:
   '@types/object-hash@3.0.6': {}
 
   '@typescript-eslint/eslint-plugin@8.12.0(@typescript-eslint/parser@8.12.0(eslint@9.13.0)(typescript@5.6.3))(eslint@9.13.0)(typescript@5.6.3)':
+
+  '@types/semver@7.5.8': {}
+
     dependencies:
       '@eslint-community/regexpp': 4.11.0
       '@typescript-eslint/parser': 8.12.0(eslint@9.13.0)(typescript@5.6.3)
@@ -2553,8 +2553,6 @@ snapshots:
       ignore-walk: 5.0.1
       npm-bundled: 2.0.1
       npm-normalize-package-bin: 2.0.0
-
-  object-hash@3.0.0: {}
 
   once@1.4.0:
     dependencies:
