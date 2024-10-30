@@ -7,8 +7,8 @@
 		"url": "git+https://github.com/wobsoriano/svelte-instantdb.git"
 	},
 	"bugs": "https://github.com/wobsoriano/svelte-instantdb/issues",
-	"packageManager": "pnpm@9.12.3",
-	"version": "0.1.7",
+	"packageManager": "pnpm@9.12.3"
+	"version": "0.1.8",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
