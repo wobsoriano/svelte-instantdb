@@ -8,6 +8,6 @@
 		<a href="/cursors">Cursor example</a>
 	</li>
 	<li>
-		<a href="/runes">Simple todo list with runes</a>
+		<a href="/typing-indicator">Typing indicator</a>
 	</li>
 </ul>

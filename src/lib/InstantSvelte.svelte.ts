@@ -207,10 +207,10 @@ export class InstantSvelteRoom<
 
 		const publishPresence = (data: Partial<RoomSchema[RoomType]['presence']>) => {
 			this._core._reactor.publishPresence(toValue(this.type), toValue(this.id), data);
-		}
+		};
 
 		// $derived not working
-		Object.assign(state, { publishPresence })
+		Object.assign(state, { publishPresence });
 
 		return state as PresenceHandle<RoomSchema[RoomType]['presence'], Keys>;
 	};
@@ -306,7 +306,9 @@ export class InstantSvelteRoom<
 		};
 
 		const result = $derived({
-			active,
+			get active() {
+			 return active
+			},
 			setActive,
 			inputProps: {
 				onkeydown: (e: KeyboardEvent) => {
