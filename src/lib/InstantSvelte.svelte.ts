@@ -307,7 +307,7 @@ export class InstantSvelteRoom<
 
 		const result = $derived({
 			get active() {
-			 return active
+				return active;
 			},
 			setActive,
 			inputProps: {
