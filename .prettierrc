@@ -4,5 +4,20 @@
 	"trailingComma": "none",
 	"printWidth": 100,
 	"plugins": ["prettier-plugin-svelte"],
-	"overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }]
+	"overrides": [
+		{
+			"files": "*.svelte",
+			"options": {
+				"bracketSameLine": false,
+				"parser": "svelte"
+			}
+		},
+		{
+			"files": ["README.md", "**/package.json"],
+			"options": {
+				"useTabs": false,
+				"tabWidth": 2
+			}
+		}
+	]
 }
