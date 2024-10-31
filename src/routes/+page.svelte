@@ -10,4 +10,7 @@
 	<li>
 		<a href="/typing-indicator">Typing indicator</a>
 	</li>
+	<li>
+		<a href="/todos-stores">Todos with Svelte stores</a>
+	</li>
 </ul>
