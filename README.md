@@ -101,6 +101,8 @@ Custom cursors
 
 ### Reactive variables
 
+To make functions return reactive state, pass a function that returns a state instead:
+
 ```ts
 let todoId = $state(null);
 
