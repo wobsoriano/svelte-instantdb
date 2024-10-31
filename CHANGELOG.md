@@ -1,5 +1,11 @@
 # svelte-instantdb
 
+## 0.2.0
+
+### Minor Changes
+
+- 32eb266: First class Svelte 5 support
+
 ## 0.1.8
 
 ### Patch Changes
