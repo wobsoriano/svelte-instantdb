@@ -162,7 +162,7 @@ export class InstantSvelteRoom<
 					});
 				}
 
-        return noop;
+				return noop;
 			}
 		);
 
@@ -407,7 +407,7 @@ export abstract class InstantSvelte<
 				});
 			}
 
-      return noop;
+			return noop;
 		});
 
 		return authState;

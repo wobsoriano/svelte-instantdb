@@ -1,8 +1,6 @@
 <script lang="ts">
-	import { init, Cursors } from '$lib/index.js';
-	import { env } from '$env/dynamic/public';
-
-	const APP_ID = env.PUBLIC_INSTANT_APP_ID;
+	import { init, Cursors } from '$lib/stores/index.js';
+	import { PUBLIC_INSTANT_APP_ID } from '$env/static/public';
 
 	type Schema = {
 		user: { name: string };
@@ -15,7 +13,7 @@
 		};
 	};
 
-	const db = init<Schema, RoomSchema>({ appId: APP_ID });
+	const db = init<Schema, RoomSchema>({ appId: PUBLIC_INSTANT_APP_ID });
 
 	const room = db.room('chat', 'main');
 

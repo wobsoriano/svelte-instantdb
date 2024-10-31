@@ -2,6 +2,9 @@
 
 Unofficial [Instant](http://instantdb.com/) SDK for Svelte.
 
+> [!NOTE]
+> Using Svelte 4? Proceed to this example using stores.
+
 ## Installation
 
 ```bash
@@ -27,12 +30,12 @@ npm install svelte-instantdb
 	};
 </script>
 
-{#if $query.isLoading}
+{#if query.isLoading}
 	<div>Fetching data...</div>
-{:else if $query.error}
-	<div>Error fetching data: {$query.error.message}</div>
+{:else if query.error}
+	<div>Error fetching data: {query.error.message}</div>
 {:else}
-	<UI data={$query.data} {addMessage} />
+	<UI data={query.data} {addMessage} />
 {/if}
 ```
 
@@ -48,9 +51,9 @@ Custom cursors
 <Cursors {room} userCursorColor="tomato">
 	Move your cursor around! ✨
 
-	<svelte:fragment slot="renderCursor" let:color let:presence>
+	{#snippet cursor({ color, presence })}
 		<CustomCursor {color} name={presence.name} />
-	</svelte:fragment>
+	{/snippet}
 </Cursors>
 ```
 
@@ -64,13 +67,13 @@ Custom cursors
 	const room = db.room('chat', 'main');
 
 	// 1. Publish your presence in the room
-	const { publishPresence } = room.usePresence({
+	const presence = room.usePresence({
 		peers: [],
 		user: false
 	});
 
 	onMount(() => {
-		publishPresence({ name: 'your_username' });
+		presence.publishPresence({ name: 'your_username' });
 	});
 
 	// 2. Use the typing indicator
@@ -88,13 +91,12 @@ Custom cursors
 <div class="flex h-screen gap-3 p-2">
 	<div class="flex flex-1 flex-col justify-end">
 		<textarea
-			on:blur={typing.inputProps.onBlur}
-			on:keydown={typing.inputProps.onKeyDown}
+			{...typing.inputProps}
 			placeholder="Compose your message here..."
 			class="w-full rounded-md border-gray-300 p-2 text-sm"
 		/>
 		<div class="truncate text-xs text-gray-500">
-			{typing.$active.length ? typingInfo(typing.$active) : <>&nbsp;</>}
+			{typing.active.length ? typingInfo(typing.active) : <>&nbsp;</>}
 		</div>
 	</div>
 </div>
@@ -102,37 +104,27 @@ Custom cursors
 
 ### Reactive variables
 
-```ts
-let todoId = 'some_id';
+To make functions return reactive state, pass a function that returns a state instead:
 
-$: state = db.useQuery({
-	todos: {
-		$: {
-			where: {
-				id: todoId
+```ts
+let todoId = $state(null);
+
+const todoState = db.useQuery(() =>
+	todoId
+		? {
+				todos: {
+					$: {
+						where: {
+							id: todoId
+						}
+					}
+				}
 			}
-		}
-	}
-});
+		: null
+);
 
-todoId = 'another_id';
+todoId = 'some_id';
 ```
-
-### Svelte 5 Runes
-
-```ts
-import { toStateRune } from 'svelte-instantdb/runes';
-
-const query = toStateRune(db.useQuery({ messages: {} }));
-
-// query.current.isLoading
-// query.current.data
-// query.current.error
-```
-
-## Todo
-
-- [ ] Docs
 
 ## License
 

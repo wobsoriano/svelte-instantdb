@@ -40,7 +40,7 @@ export function useQuery<
 		(set) => {
 			if (!query || !browser) {
 				// Don't subscribe if query is null or we're not in the browser
-        return noop;
+				return noop;
 			}
 
 			if (browser) {

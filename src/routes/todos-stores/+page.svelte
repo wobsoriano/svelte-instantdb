@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { init, tx, id } from '$lib/index.js';
-	import { PUBLIC_INSTANT_APP_ID } from '$env/static/public';
+	import { init, tx, id } from '$lib/stores/index.js'; // import {} from 'svelte-instantdb/stores'
+	import { env } from '$env/dynamic/public';
+
+	const APP_ID = env.PUBLIC_INSTANT_APP_ID;
 
 	type Todo = {
 		id: string;
@@ -12,17 +14,17 @@
 		todos: Todo;
 	};
 
-	const db = init<Schema>({ appId: PUBLIC_INSTANT_APP_ID });
+	const db = init<Schema>({ appId: APP_ID });
 
-	const query = db.useQuery({
+	const state = db.useQuery({
 		todos: {}
 	});
 
-	let newTodo = $state('');
-	let selectedTodo: Todo | null = $state(null);
+	let newTodo = '';
+	let selectedTodo: Todo | null = null;
 
 	// This is just a test code to test reactivity!
-	const todoState = db.useQuery(() =>
+	$: todoState = db.useQuery(
 		selectedTodo
 			? {
 					todos: {
@@ -35,7 +37,7 @@
 				}
 			: null
 	);
-	$inspect(todoState);
+	$: console.log('$todoState', $todoState);
 
 	function addTodo(e: SubmitEvent) {
 		e.preventDefault();
@@ -54,7 +56,7 @@
 	}
 
 	function toggleTodo(id: string) {
-		const isDone = query.data.todos.find((i) => i.id === id).done;
+		const isDone = $state.data.todos.find((i) => i.id === id).done;
 		db.transact(tx.todos[id].update({ done: !isDone }));
 	}
 
@@ -70,28 +72,28 @@
 <main>
 	<h1>Svelte InstantDB Todo list</h1>
 
-	<form onsubmit={addTodo}>
+	<form on:submit|preventDefault={addTodo}>
 		<input bind:value={newTodo} placeholder="Enter a new task" />
 		<button type="submit">Add</button>
 	</form>
 
 	<div class="todo-container">
-		{#if query.isLoading}
+		{#if $state.isLoading}
 			<div>Fetching data...</div>
-		{:else if query.error}
-			<div>Error fetching data: {query.error.message}</div>
+		{:else if $state.error}
+			<div>Error fetching data: {$state.error.message}</div>
 		{:else}
 			<ul>
-				{#each query.data.todos as todo (todo.id)}
+				{#each $state.data.todos as todo (todo.id)}
 					<li class:done={todo.done}>
-						<button class="todo-text" onclick={() => selectTodo(todo)}>
+						<button class="todo-text" on:click={() => selectTodo(todo)}>
 							{todo.text}
 						</button>
 						<div class="todo-actions">
-							<button onclick={() => toggleTodo(todo.id)}>
+							<button on:click={() => toggleTodo(todo.id)}>
 								{todo.done ? 'Undo' : 'Done'}
 							</button>
-							<button onclick={() => deleteTodo(todo.id)}>Delete</button>
+							<button on:click={() => deleteTodo(todo.id)}>Delete</button>
 						</div>
 					</li>
 				{/each}
@@ -102,7 +104,7 @@
 			<div class="todo-preview">
 				<div class="preview-header">
 					<h2>Todo Details</h2>
-					<button class="close-button" onclick={closePreview}>×</button>
+					<button class="close-button" on:click={closePreview}>×</button>
 				</div>
 				<p><strong>ID:</strong> {selectedTodo.id}</p>
 				<p><strong>Text:</strong> {selectedTodo.text}</p>
