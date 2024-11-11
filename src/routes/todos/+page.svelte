@@ -54,7 +54,7 @@
 	}
 
 	function toggleTodo(id: string) {
-		const isDone = query.data.todos.find((i) => i.id === id).done;
+		const isDone = query.current.data.todos.find((i) => i.id === id).done;
 		db.transact(tx.todos[id].update({ done: !isDone }));
 	}
 
@@ -76,13 +76,13 @@
 	</form>
 
 	<div class="todo-container">
-		{#if query.isLoading}
+		{#if query.current.isLoading}
 			<div>Fetching data...</div>
-		{:else if query.error}
-			<div>Error fetching data: {query.error.message}</div>
+		{:else if query.current.error}
+			<div>Error fetching data: {query.current.error.message}</div>
 		{:else}
 			<ul>
-				{#each query.data.todos as todo (todo.id)}
+				{#each query.current.data.todos as todo (todo.id)}
 					<li class:done={todo.done}>
 						<button class="todo-text" onclick={() => selectTodo(todo)}>
 							{todo.text}

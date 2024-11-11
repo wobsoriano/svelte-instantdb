@@ -41,9 +41,9 @@
 
 	const typingIndicator = room.useTypingIndicator('chat');
 
-	const peers = $derived(Object.values(presence.peers).filter((p) => p.id));
+	const peers = $derived(Object.values(presence.current.peers).filter((p) => p.id));
 	const activeMap = $derived(
-		Object.fromEntries(typingIndicator.active.map((activePeer) => [activePeer.id, activePeer]))
+		Object.fromEntries(typingIndicator.current.active.map((activePeer) => [activePeer.id, activePeer]))
 	);
 
 	function typingInfo(typing: { name: string }[]) {
@@ -71,11 +71,11 @@
 		<textarea
 			class="textarea"
 			placeholder="Compose your message here..."
-			{...typingIndicator.inputProps}
+			{...typingIndicator.current.inputProps}
 		></textarea>
 		<div class="typing-text">
-			{#if typingIndicator.active.length}
-				{typingInfo(typingIndicator.active)}
+			{#if typingIndicator.current.active.length}
+				{typingInfo(typingIndicator.current.active)}
 			{:else}
 				&nbsp;
 			{/if}
