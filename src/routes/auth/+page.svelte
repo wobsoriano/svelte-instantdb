@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { init, tx, id } from '$lib/index.js'; // import {} from 'svelte-instantdb/stores'
+	import { init } from '$lib/index.js'; // import {} from 'svelte-instantdb/stores'
 	import { env } from '$env/dynamic/public';
 
 	const APP_ID = env.PUBLIC_INSTANT_APP_ID;
@@ -12,33 +12,22 @@
 	let code = $state('');
 
 	function handleEmailSubmit(e: SubmitEvent) {
-		console.log('sending code...', email);
 		e.preventDefault();
 		if (!email) return;
-		console.log('hello');
+
 		sentEmail = email;
-		db.auth
-			.sendMagicCode({ email })
-			.then((x) => {
-				console.log('result here', x);
-			})
-			.catch((err) => {
-				alert('Uh oh :' + err.body?.message);
-				sentEmail = '';
-			});
+		db.auth.sendMagicCode({ email }).catch((err) => {
+			alert('Uh oh :' + err.body?.message);
+			sentEmail = '';
+		});
 	}
 
 	function handleCodeSubmit(e: SubmitEvent) {
 		e.preventDefault();
-		db.auth
-			.signInWithMagicCode({ email: sentEmail, code })
-			.then((x) => {
-				console.log('result here', x);
-			})
-			.catch((err) => {
-				alert('Uh oh :' + err.body?.message);
-				code = '';
-			});
+		db.auth.signInWithMagicCode({ email: sentEmail, code }).catch((err) => {
+			alert('Uh oh :' + err.body?.message);
+			code = '';
+		});
 	}
 </script>
 

@@ -43,7 +43,9 @@
 
 	const peers = $derived(Object.values(presence.current.peers).filter((p) => p.id));
 	const activeMap = $derived(
-		Object.fromEntries(typingIndicator.current.active.map((activePeer) => [activePeer.id, activePeer]))
+		Object.fromEntries(
+			typingIndicator.current.active.map((activePeer) => [activePeer.id, activePeer])
+		)
 	);
 
 	function typingInfo(typing: { name: string }[]) {
