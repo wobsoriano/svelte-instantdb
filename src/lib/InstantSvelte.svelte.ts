@@ -442,7 +442,7 @@ export abstract class InstantSvelte<
 	): {
 		current: LifecycleSubscriptionState<Q, Schema, WithCardinalityInference>;
 	} => {
-		const state = $derived(useQuery(this._core, query).state);
+		const state = $derived(useQuery(this._core, query).current.state);
 		return {
 			get current() {
 				return state;
