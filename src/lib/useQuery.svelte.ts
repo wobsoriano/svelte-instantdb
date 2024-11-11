@@ -29,8 +29,10 @@ export function useQuery<
 	_core: InstantClient<Schema, any, WithCardinalityInference>,
 	_query: MaybeGetter<null | Q>
 ): {
-	state: LifecycleSubscriptionState<Q, Schema, WithCardinalityInference>;
-	query: any;
+	current: {
+		state: LifecycleSubscriptionState<Q, Schema, WithCardinalityInference>;
+		query: any;
+	};
 } {
 	const query = $derived(toValue(_query) ? coerceQuery(toValue(_query)) : null);
 	const queryHash = $derived(weakHash(query));
@@ -60,11 +62,11 @@ export function useQuery<
 	});
 
 	return {
-		get state() {
-			return state;
-		},
-		get query() {
-			return query;
+		get current() {
+			return {
+				state,
+				query
+			};
 		}
 	};
 }

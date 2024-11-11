@@ -160,7 +160,9 @@ export class InstantSvelteRoom<
 	 */
 	usePresence = <Keys extends keyof RoomSchema[RoomType]['presence']>(
 		opts: MaybeGetter<PresenceOpts<RoomSchema[RoomType]['presence'], Keys>> = {}
-	): PresenceHandle<RoomSchema[RoomType]['presence'], Keys> => {
+	): {
+		current: PresenceHandle<RoomSchema[RoomType]['presence'], Keys>;
+	} => {
 		const getInitialState = (): PresenceResponse<RoomSchema[RoomType]['presence'], Keys> => {
 			const presence = this._core._reactor.getPresence(
 				toValue(this.type),
@@ -209,10 +211,14 @@ export class InstantSvelteRoom<
 			this._core._reactor.publishPresence(toValue(this.type), toValue(this.id), data);
 		};
 
-		// $derived not working
-		Object.assign(state, { publishPresence });
-
-		return state as PresenceHandle<RoomSchema[RoomType]['presence'], Keys>;
+		return {
+			get current() {
+				return {
+					...state,
+					publishPresence
+				};
+			}
+		};
 	};
 
 	/**
@@ -263,7 +269,9 @@ export class InstantSvelteRoom<
 	useTypingIndicator = (
 		inputName: MaybeGetter<string>,
 		opts: MaybeGetter<TypingIndicatorOpts> = {}
-	): TypingIndicatorHandle<RoomSchema[RoomType]['presence']> => {
+	): {
+		current: TypingIndicatorHandle<RoomSchema[RoomType]['presence']>;
+	} => {
 		const timeout = useTimeout();
 
 		const onservedPresence = this.usePresence(() => ({
@@ -276,7 +284,7 @@ export class InstantSvelteRoom<
 				toValue(this.id)
 			);
 			// eslint-disable-next-line @typescript-eslint/no-unused-expressions
-			onservedPresence.peers;
+			onservedPresence.current.peers;
 
 			return toValue(opts)?.writeOnly
 				? []
@@ -305,25 +313,25 @@ export class InstantSvelteRoom<
 			});
 		};
 
-		const result = $derived({
-			get active() {
-				return active;
-			},
-			setActive,
-			inputProps: {
-				onkeydown: (e: KeyboardEvent) => {
-					const isEnter = toValue(opts)?.stopOnEnter && e.key === 'Enter';
-					const isActive = !isEnter;
+		return {
+			get current() {
+				return {
+					active,
+					setActive,
+					inputProps: {
+						onkeydown: (e: KeyboardEvent) => {
+							const isEnter = toValue(opts)?.stopOnEnter && e.key === 'Enter';
+							const isActive = !isEnter;
 
-					setActive(isActive);
-				},
-				onblur: () => {
-					setActive(false);
-				}
+							setActive(isActive);
+						},
+						onblur: () => {
+							setActive(false);
+						}
+					}
+				};
 			}
-		});
-
-		return result;
+		};
 	};
 }
 
@@ -431,9 +439,15 @@ export abstract class InstantSvelte<
 		Q extends Schema extends InstantGraph<any, any> ? InstaQLQueryParams<Schema> : Exactly<Query, Q>
 	>(
 		query: MaybeGetter<null | Q>
-	): LifecycleSubscriptionState<Q, Schema, WithCardinalityInference> => {
-		const state = $derived(useQuery(this._core, query).state);
-		return state;
+	): {
+		current: LifecycleSubscriptionState<Q, Schema, WithCardinalityInference>;
+	} => {
+		const state = $derived(useQuery(this._core, query).current.state);
+		return {
+			get current() {
+				return state;
+			}
+		};
 	};
 
 	/**
@@ -463,7 +477,9 @@ export abstract class InstantSvelte<
 	 *  {/if}
 	 *
 	 */
-	useAuth = (): AuthState => {
+	useAuth = (): {
+		current: AuthState;
+	} => {
 		let authState = $state(this._core._reactor._currentUserCached);
 
 		$effect(() => {
@@ -474,7 +490,11 @@ export abstract class InstantSvelte<
 			return unsubscribe;
 		});
 
-		return authState;
+		return {
+			get current() {
+				return authState;
+			}
+		};
 	};
 
 	/**

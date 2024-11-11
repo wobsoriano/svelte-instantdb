@@ -52,7 +52,7 @@
 		const y = touch.clientY;
 		const xPercent = ((x - rect.left) / rect.width) * 100;
 		const yPercent = ((y - rect.top) / rect.height) * 100;
-		cursorsPresence.publishPresence({
+		cursorsPresence.current.publishPresence({
 			[spaceId]: {
 				x,
 				y,
@@ -73,7 +73,7 @@
 	}
 
 	function onmouseout(_e: MouseEvent) {
-		cursorsPresence.publishPresence({
+		cursorsPresence.current.publishPresence({
 			[spaceId]: undefined
 		} as RoomSchema[RoomType]['presence']);
 	}
@@ -95,7 +95,7 @@
 	}
 
 	function ontouchend(_e: TouchEvent) {
-		cursorsPresence.publishPresence({
+		cursorsPresence.current.publishPresence({
 			[spaceId]: undefined
 		} as RoomSchema[RoomType]['presence']);
 	}
@@ -120,7 +120,7 @@
 >
 	{@render children?.()}
 	<div style="{absStyles} {inertStyles} z-index: {zIndex !== undefined ? zIndex : defaultZ};">
-		{#each Object.entries(cursorsPresence.peers) as [id, presence]}
+		{#each Object.entries(cursorsPresence.current.peers) as [id, presence]}
 			{#if presence[spaceId]}
 				{@const _cursor = presence[spaceId]}
 				<div
