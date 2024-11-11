@@ -30,12 +30,12 @@ npm install svelte-instantdb
   };
 </script>
 
-{#if query.isLoading}
+{#if query.current.isLoading}
   <div>Fetching data...</div>
-{:else if query.error}
-  <div>Error fetching data: {query.error.message}</div>
+{:else if query.current.error}
+  <div>Error fetching data: {query.current.error.message}</div>
 {:else}
-  <UI data={query.data} {addMessage} />
+  <UI data={query.current.data} {addMessage} />
 {/if}
 ```
 
@@ -73,7 +73,7 @@ Custom cursors
   });
 
   onMount(() => {
-    presence.publishPresence({ name: 'your_username' });
+    presence.current.publishPresence({ name: 'your_username' });
   });
 
   // 2. Use the typing indicator
@@ -91,12 +91,12 @@ Custom cursors
 <div class="flex h-screen gap-3 p-2">
   <div class="flex flex-1 flex-col justify-end">
     <textarea
-      {...typing.inputProps}
+      {...typing.current.inputProps}
       placeholder="Compose your message here..."
       class="w-full rounded-md border-gray-300 p-2 text-sm"
     />
     <div class="truncate text-xs text-gray-500">
-      {typing.active.length ? typingInfo(typing.active) : <>&nbsp;</>}
+      {typing.current.active.length ? typingInfo(typing.current.active) : <>&nbsp;</>}
     </div>
   </div>
 </div>

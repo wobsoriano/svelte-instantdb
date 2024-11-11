@@ -284,7 +284,7 @@ export class InstantSvelteRoom<
 				toValue(this.id)
 			);
 			// eslint-disable-next-line @typescript-eslint/no-unused-expressions
-			onservedPresence.peers;
+			onservedPresence.current.peers;
 
 			return toValue(opts)?.writeOnly
 				? []
