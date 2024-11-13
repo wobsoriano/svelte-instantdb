@@ -8,7 +8,7 @@
   },
   "bugs": "https://github.com/wobsoriano/svelte-instantdb/issues",
   "packageManager": "pnpm@9.12.0",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "scripts": {
     "dev": "vite dev",
     "build": "npm run package",
