@@ -64,6 +64,6 @@
   "types": "./dist/index.d.ts",
   "type": "module",
   "dependencies": {
-    "@instantdb/core": "^0.14.30"
+    "@instantdb/core": "^0.15.1"
   }
 }
