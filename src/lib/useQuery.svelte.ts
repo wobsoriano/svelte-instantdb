@@ -1,12 +1,10 @@
 import {
-	coerceQuery,
 	weakHash,
-	type Query,
-	type Exactly,
-	type InstantClient,
-	type LifecycleSubscriptionState,
-	type InstaQLQueryParams,
-	type InstantGraph
+	coerceQuery,
+	type InstaQLParams,
+	InstantCoreDatabase,
+	type InstaQLLifecycleState,
+	type InstantSchemaDef
 } from '@instantdb/core';
 
 import { toValue, type MaybeGetter } from './utils.js';
@@ -21,23 +19,22 @@ function stateForResult(result: any) {
 	};
 }
 
-export function useQuery<
-	Q extends Schema extends InstantGraph<any, any> ? InstaQLQueryParams<Schema> : Exactly<Query, Q>,
-	Schema extends InstantGraph<any, any, any> | {},
-	WithCardinalityInference extends boolean
+export function useQueryInternal<
+	Q extends InstaQLParams<Schema>,
+	Schema extends InstantSchemaDef<any, any, any>
 >(
-	_core: InstantClient<Schema, any, WithCardinalityInference>,
+	_core: InstantCoreDatabase<Schema>,
 	_query: MaybeGetter<null | Q>
 ): {
 	current: {
-		state: LifecycleSubscriptionState<Q, Schema, WithCardinalityInference>;
+		state: InstaQLLifecycleState<Schema, Q>;
 		query: any;
 	};
 } {
 	const query = $derived(toValue(_query) ? coerceQuery(toValue(_query)) : null);
 	const queryHash = $derived(weakHash(query));
 
-	const state = $state<LifecycleSubscriptionState<Q, Schema, WithCardinalityInference>>(
+	const state = $state<InstaQLLifecycleState<Schema, Q>>(
 		stateForResult(_core._reactor.getPreviousResult(query))
 	);
 
@@ -45,6 +42,7 @@ export function useQuery<
 		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 		queryHash;
 
+		// Don't subscribe if query is null
 		if (!query) {
 			return () => {};
 		}

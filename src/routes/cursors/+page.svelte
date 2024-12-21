@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { init, Cursors } from '$lib/stores/index.js';
+	import { init, Cursors } from '$lib/index.js';
 	import { PUBLIC_INSTANT_APP_ID } from '$env/static/public';
 
 	type Schema = {
@@ -28,7 +28,7 @@
 			.join('');
 </script>
 
-<Cursors className="cursors" {room} userCursorColor={randomDarkColor}>
+<Cursors class="cursors" {room} userCursorColor={randomDarkColor}>
 	Move your cursor around! ✨
 </Cursors>
 
