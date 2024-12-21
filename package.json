@@ -26,10 +26,6 @@
     ".": {
       "types": "./dist/index.d.ts",
       "svelte": "./dist/index.js"
-    },
-    "./stores": {
-      "types": "./dist/stores/index.d.ts",
-      "svelte": "./dist/stores/index.js"
     }
   },
   "files": [
