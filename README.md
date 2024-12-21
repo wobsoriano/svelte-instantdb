@@ -1,9 +1,6 @@
 # svelte-instantdb
 
-Unofficial [Instant](http://instantdb.com/) SDK for Svelte.
-
-> [!NOTE]
-> Using Svelte 4 and stores? Proceed to [this example](src/routes/todos-stores/+page.svelte) using stores.
+Unofficial [Instant](http://instantdb.com/) SDK for Svelte 5.
 
 ## Installation
 

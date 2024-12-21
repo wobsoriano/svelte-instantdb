@@ -1,27 +1,26 @@
 import {
 	// types
-	InstantClient,
 	Auth,
 	Storage,
 	txInit,
-	_init_internal,
 	type AuthState,
-	type Config,
-	type Query,
-	type Exactly,
+	type ConnectionStatus,
 	type TransactionChunk,
-	type LifecycleSubscriptionState,
 	type PresenceOpts,
 	type PresenceResponse,
 	type RoomSchemaShape,
-	type InstaQLQueryParams,
-	type ConfigWithSchema,
-	type IDatabase,
-	type InstantGraph,
-	type QueryResponse,
-	type PageInfoResponse
+	type InstaQLParams,
+	type InstantConfig,
+	type PageInfoResponse,
+	InstantCoreDatabase,
+	init as core_init,
+	type InstaQLLifecycleState,
+	type InstaQLResponse,
+	type RoomsOf,
+	type InstantSchemaDef,
+	type IInstantDatabase
 } from '@instantdb/core';
-import { useQuery } from './useQuery.svelte.js';
+import { useQueryInternal } from './useQuery.svelte.js';
 import { useTimeout } from './useTimeout.svelte.js';
 import { toValue, type MaybeGetter } from './utils.js';
 import { untrack } from 'svelte';
@@ -52,16 +51,16 @@ export type TypingIndicatorHandle<PresenceShape> = {
 export const defaultActivityStopTimeout = 1_000;
 
 export class InstantSvelteRoom<
-	Schema extends InstantGraph<any, any> | {},
+	Schema extends InstantSchemaDef<any, any, any>,
 	RoomSchema extends RoomSchemaShape,
 	RoomType extends keyof RoomSchema
 > {
-	_core: InstantClient<Schema, RoomSchema>;
+	_core: InstantCoreDatabase<Schema>;
 	type: MaybeGetter<RoomType>;
 	id: MaybeGetter<string>;
 
 	constructor(
-		_core: InstantClient<Schema, RoomSchema, any>,
+		_core: InstantCoreDatabase<Schema>,
 		type: MaybeGetter<RoomType>,
 		id: MaybeGetter<string>
 	) {
@@ -152,8 +151,8 @@ export class InstantSvelteRoom<
 	 *   const { roomId } = $props()
 	 *
 	 *   const presence = db.room(roomType, roomId).usePresence({ keys: ["name", "avatar"] });
-	 *   // presence.peers
-	 *   // presence.publishPresence
+	 *   // presence.current.peers
+	 *   // presence.current.publishPresence
 	 *
 	 *   // ...
 	 * </script>
@@ -259,12 +258,12 @@ export class InstantSvelteRoom<
 	 *   const { roomId } = $props()
 	 *
 	 *   const typingIndicator = db.room(roomType, roomId).useTypingIndicator("chat-input", opts);
-	 *   // typingIndicator.active
-	 *   // typingIndicator.setActive
-	 *  // typingIndicator.inputProps
+	 *   // typingIndicator.current.active
+	 *   // typingIndicator.current.setActive
+	 *  // typingIndicator.current.inputProps
 	 * </script>
 	 *
-	 * <input {...typingIndicator.inputProps} />
+	 * <input {...typingIndicator.current.inputProps} />
 	 */
 	useTypingIndicator = (
 		inputName: MaybeGetter<string>,
@@ -335,29 +334,28 @@ export class InstantSvelteRoom<
 	};
 }
 
-export abstract class InstantSvelte<
-	Schema extends InstantGraph<any, any> | {} = {},
-	RoomSchema extends RoomSchemaShape = {},
-	WithCardinalityInference extends boolean = false
-> implements IDatabase<Schema, RoomSchema, WithCardinalityInference>
+export default abstract class InstantSvelteAbstractDatabase<
+	Schema extends InstantSchemaDef<any, any, any>,
+	Rooms extends RoomSchemaShape = RoomsOf<Schema>
+> implements IInstantDatabase<Schema>
 {
-	public withCardinalityInference?: WithCardinalityInference;
-	public tx = txInit<Schema extends InstantGraph<any, any> ? Schema : InstantGraph<any, any>>();
+	public tx = txInit<Schema>();
 
 	public auth: Auth;
 	public storage: Storage;
-	public _core: InstantClient<Schema, RoomSchema, WithCardinalityInference>;
+	public _core: InstantCoreDatabase<Schema>;
 
 	static Storage?: any;
 	static NetworkListener?: any;
 
-	constructor(config: Config | ConfigWithSchema<any>) {
-		this._core = _init_internal<Schema, RoomSchema, WithCardinalityInference>(
+	constructor(config: InstantConfig<Schema>, versions?: { [key: string]: string }) {
+		this._core = core_init<Schema>(
 			config,
 			// @ts-expect-error because TS can't resolve subclass statics
 			this.constructor.Storage,
 			// @ts-expect-error because TS can't resolve subclass statics
-			this.constructor.NetworkListener
+			this.constructor.NetworkListener,
+			versions
 		);
 		this.auth = this._core.auth;
 		this.storage = this._core.storage;
@@ -383,11 +381,11 @@ export abstract class InstantSvelte<
 	 *   useTypingIndicator,
 	 * } = db.room(roomType, roomId);
 	 */
-	room<RoomType extends keyof RoomSchema>(
+	room<RoomType extends keyof Rooms>(
 		type: MaybeGetter<RoomType> = '_defaultRoomType' as RoomType,
 		id: MaybeGetter<string> = '_defaultRoomId'
 	) {
-		return new InstantSvelteRoom<Schema, RoomSchema, RoomType>(this._core, type, id);
+		return new InstantSvelteRoom<Schema, Rooms, RoomType>(this._core, type, id);
 	}
 
 	/**
@@ -435,14 +433,12 @@ export abstract class InstantSvelte<
 	 *  // skip if `user` is not logged in
 	 *  db.useQuery(auth.user ? { goals: {} } : null)
 	 */
-	useQuery = <
-		Q extends Schema extends InstantGraph<any, any> ? InstaQLQueryParams<Schema> : Exactly<Query, Q>
-	>(
+	useQuery = <Q extends InstaQLParams<Schema>>(
 		query: MaybeGetter<null | Q>
 	): {
-		current: LifecycleSubscriptionState<Q, Schema, WithCardinalityInference>;
+		current: InstaQLLifecycleState<Schema, Q>;
 	} => {
-		const state = $derived(useQuery(this._core, query).current.state);
+		const state = $derived(useQueryInternal(this._core, query).current.state);
 		return {
 			get current() {
 				return state;
@@ -466,11 +462,11 @@ export abstract class InstantSvelte<
 	 *    const auth = db.useAuth();
 	 *  </script>
 	 *
-	 *  {#if auth.isLoading}
+	 *  {#if auth.current.isLoading}
 	 *    <div>Loading...</div>
-	 *  {:else if auth.error}
+	 *  {:else if auth.current.error}
 	 *    <div>Uh oh! {auth.error.message}</div>
-	 *  {:else if auth.user}
+	 *  {:else if auth.current.user}
 	 *    <Main user={auth.user} />
 	 *  {:else}
 	 *    <Login />
@@ -498,6 +494,54 @@ export abstract class InstantSvelte<
 	};
 
 	/**
+	 * Listen for connection status changes to Instant. Use this for things like
+	 * showing connection state to users
+	 *
+	 * @see https://www.instantdb.com/docs/patterns#connection-status
+	 * @example
+	 *  <script>
+	 *    import { db } from './db';
+	 *
+	 *    const status = db.useConnectionStatus();
+	 *
+	 *    const connectionState = $derived.by(() => {
+	 *      return status.current === 'connecting' || status.current === 'opened'
+	 *        ? 'authenticating'
+	 *        : status.current === 'authenticated'
+	 *          ? 'connected'
+	 *        : status.current === 'closed'
+	 *          ? 'closed'
+	 *        : status.current === 'errored'
+	 *          ? 'errored'
+	 *        : 'unexpected state'
+	 *    });
+	 *  </script>
+	 *
+	 *  <div>Connection state: {connectionState}</div>
+	 */
+	useConnectionStatus = (): {
+		current: ConnectionStatus;
+	} => {
+		let status = $state<ConnectionStatus>(this._core._reactor.status as ConnectionStatus);
+
+		$effect(() => {
+			const unsubscribe = this._core.subscribeConnectionStatus((newStatus) => {
+				if (newStatus !== status) {
+					status = newStatus;
+				}
+			});
+
+			return unsubscribe;
+		});
+
+		return {
+			get current() {
+				return status;
+			}
+		};
+	};
+
+	/**
 	 * Use this for one-off queries.
 	 * Returns local data if available, otherwise fetches from the server.
 	 * Because we want to avoid stale data, this method will throw an error
@@ -510,12 +554,10 @@ export abstract class InstantSvelte<
 	 *  const resp = await db.queryOnce({ goals: {} });
 	 *  console.log(resp.data.goals)
 	 */
-	queryOnce = <
-		Q extends Schema extends InstantGraph<any, any> ? InstaQLQueryParams<Schema> : Exactly<Query, Q>
-	>(
+	queryOnce = <Q extends InstaQLParams<Schema>>(
 		query: Q
 	): Promise<{
-		data: QueryResponse<Q, Schema, WithCardinalityInference>;
+		data: InstaQLResponse<Schema, Q>;
 		pageInfo: PageInfoResponse<Q>;
 	}> => {
 		return this._core.queryOnce(query);
