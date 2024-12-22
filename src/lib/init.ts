@@ -1,7 +1,7 @@
 import type { InstantConfig, InstantSchemaDef, InstantUnknownSchema } from '@instantdb/core';
 
 import InstantSvelteWebDatabase from './InstantSvelteWebDatabase.js';
-import version from './version.js';
+import VERSION from './version.js';
 
 /**
  *
@@ -27,7 +27,7 @@ export function init<Schema extends InstantSchemaDef<any, any, any> = InstantUnk
 	config: InstantConfig<Schema>
 ) {
 	return new InstantSvelteWebDatabase<Schema>(config, {
-		'svelte-instantdb': version
+		'svelte-instantdb': VERSION
 	});
 }
 
