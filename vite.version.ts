@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import pkg from './package.json' assert { type: 'json' };
 
-// Why this extra Vite config? This is for adding the current libraries version
+// Why this extra Vite config? This is for adding the current library's version
 // and pass it to the InstantSvelteWebDatabase class option
 
 export default defineConfig({
