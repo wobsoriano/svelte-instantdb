@@ -1,5 +1,11 @@
 # svelte-instantdb
 
+## 0.4.1
+
+### Patch Changes
+
+- 591f8e4: Bump @instantdb/core from 0.17.2 to 0.17.3
+
 ## 0.4.0
 
 ### Minor Changes
