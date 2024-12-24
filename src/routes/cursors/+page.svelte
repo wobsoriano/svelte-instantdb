@@ -2,18 +2,7 @@
 	import { init, Cursors } from '$lib/index.js';
 	import { PUBLIC_INSTANT_APP_ID } from '$env/static/public';
 
-	type Schema = {
-		user: { name: string };
-	};
-
-	// Provide a room schema to get typings for presence!
-	type RoomSchema = {
-		chat: {
-			presence: { name: string };
-		};
-	};
-
-	const db = init<Schema, RoomSchema>({ appId: PUBLIC_INSTANT_APP_ID });
+	const db = init({ appId: PUBLIC_INSTANT_APP_ID });
 
 	const room = db.room('chat', 'main');
 

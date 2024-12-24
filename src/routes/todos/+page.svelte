@@ -1,18 +1,20 @@
 <script lang="ts">
-	import { init, tx, id } from '$lib/index.js';
+	import { init, tx, i, id, type InstaQLEntity } from '$lib/index.js';
 	import { PUBLIC_INSTANT_APP_ID } from '$env/static/public';
 
-	type Todo = {
-		id: string;
-		text: string;
-		done: boolean;
-		createdAt: number;
-	};
-	type Schema = {
-		todos: Todo;
-	};
+	const schema = i.schema({
+		entities: {
+			todos: i.entity({
+				text: i.string(),
+				done: i.boolean(),
+				createdAt: i.number()
+			})
+		}
+	});
 
-	const db = init<Schema>({ appId: PUBLIC_INSTANT_APP_ID });
+	type Todo = InstaQLEntity<typeof schema, 'todos'>;
+
+	const db = init({ appId: PUBLIC_INSTANT_APP_ID, schema });
 
 	const query = db.useQuery({
 		todos: {}

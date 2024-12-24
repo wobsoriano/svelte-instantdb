@@ -2,20 +2,7 @@
 	import { init } from '$lib/index.js';
 	import { PUBLIC_INSTANT_APP_ID } from '$env/static/public';
 
-	const db = init<
-		{},
-		{
-			'typing-indicator-example': {
-				presence: {
-					id: string;
-					name: string;
-					color: string;
-				};
-			};
-		}
-	>({
-		appId: PUBLIC_INSTANT_APP_ID
-	});
+	const db = init({ appId: PUBLIC_INSTANT_APP_ID });
 
 	const userId = Math.random().toString(36).slice(2, 6);
 	const randomDarkColor =
@@ -33,12 +20,14 @@
 		color: randomDarkColor
 	};
 
-	const room = db.room('typing-indicator-example', '1234');
+	const room = db.room('chat', 'main');
 
+	// 1. Publish your presence in the room.
 	room.useSyncPresence(user);
 
 	const presence = room.usePresence();
 
+	// 2. Use the typing indicator hook
 	const typingIndicator = room.useTypingIndicator('chat');
 
 	const peers = $derived(Object.values(presence.current.peers).filter((p) => p.id));
