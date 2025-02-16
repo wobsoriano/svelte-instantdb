@@ -7,7 +7,7 @@ import {
 	type InstantSchemaDef
 } from '@instantdb/core';
 
-import { toValue, type MaybeGetter } from './utils.js';
+import { toValue, type MaybeGetter, type ReactiveValue } from './utils.js';
 
 function stateForResult(result: any) {
 	return {
@@ -25,12 +25,10 @@ export function useQueryInternal<
 >(
 	_core: InstantCoreDatabase<Schema>,
 	_query: MaybeGetter<null | Q>
-): {
-	current: {
-		state: InstaQLLifecycleState<Schema, Q>;
-		query: any;
-	};
-} {
+): ReactiveValue<{
+	state: InstaQLLifecycleState<Schema, Q>;
+	query: any;
+}> {
 	const query = $derived(toValue(_query) ? coerceQuery(toValue(_query)) : null);
 	const queryHash = $derived(weakHash(query));
 

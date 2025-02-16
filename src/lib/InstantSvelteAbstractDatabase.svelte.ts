@@ -22,7 +22,7 @@ import {
 } from '@instantdb/core';
 import { useQueryInternal } from './useQuery.svelte.js';
 import { useTimeout } from './useTimeout.svelte.js';
-import { toValue, type MaybeGetter } from './utils.js';
+import { toValue, type MaybeGetter, type ReactiveValue } from './utils.js';
 import { untrack } from 'svelte';
 
 export type PresenceHandle<PresenceShape, Keys extends keyof PresenceShape> = PresenceResponse<
@@ -159,9 +159,7 @@ export class InstantSvelteRoom<
 	 */
 	usePresence = <Keys extends keyof RoomSchema[RoomType]['presence']>(
 		opts: MaybeGetter<PresenceOpts<RoomSchema[RoomType]['presence'], Keys>> = {}
-	): {
-		current: PresenceHandle<RoomSchema[RoomType]['presence'], Keys>;
-	} => {
+	): ReactiveValue<PresenceHandle<RoomSchema[RoomType]['presence'], Keys>> => {
 		const getInitialState = (): PresenceResponse<RoomSchema[RoomType]['presence'], Keys> => {
 			const presence = this._core._reactor.getPresence(
 				toValue(this.type),
@@ -268,9 +266,7 @@ export class InstantSvelteRoom<
 	useTypingIndicator = (
 		inputName: MaybeGetter<string>,
 		opts: MaybeGetter<TypingIndicatorOpts> = {}
-	): {
-		current: TypingIndicatorHandle<RoomSchema[RoomType]['presence']>;
-	} => {
+	): ReactiveValue<TypingIndicatorHandle<RoomSchema[RoomType]['presence']>> => {
 		const timeout = useTimeout();
 
 		const onservedPresence = this.usePresence(() => ({
@@ -435,9 +431,7 @@ export default abstract class InstantSvelteAbstractDatabase<
 	 */
 	useQuery = <Q extends InstaQLParams<Schema>>(
 		query: MaybeGetter<null | Q>
-	): {
-		current: InstaQLLifecycleState<Schema, Q>;
-	} => {
+	): ReactiveValue<InstaQLLifecycleState<Schema, Q>> => {
 		const state = $derived(useQueryInternal(this._core, query).current.state);
 		return {
 			get current() {
@@ -473,9 +467,7 @@ export default abstract class InstantSvelteAbstractDatabase<
 	 *  {/if}
 	 *
 	 */
-	useAuth = (): {
-		current: AuthState;
-	} => {
+	useAuth = (): ReactiveValue<AuthState> => {
 		let authState = $state(this._core._reactor._currentUserCached);
 
 		$effect(() => {
@@ -519,9 +511,7 @@ export default abstract class InstantSvelteAbstractDatabase<
 	 *
 	 *  <div>Connection state: {connectionState}</div>
 	 */
-	useConnectionStatus = (): {
-		current: ConnectionStatus;
-	} => {
+	useConnectionStatus = (): ReactiveValue<ConnectionStatus> => {
 		let status = $state<ConnectionStatus>(this._core._reactor.status as ConnectionStatus);
 
 		$effect(() => {
