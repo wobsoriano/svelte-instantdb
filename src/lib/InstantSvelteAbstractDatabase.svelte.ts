@@ -123,7 +123,7 @@ export class InstantSvelteRoom<
 	 */
 	usePublishTopic = <Topic extends keyof RoomSchema[RoomType]['topics']>(
 		topic: MaybeGetter<Topic>
-	): ReactiveValue<(data: RoomSchema[RoomType]['topics'][Topic]) => void> => {
+	): (data: RoomSchema[RoomType]['topics'][Topic]) => void => {
 		$effect(() => {
 			const unsubscribe = this._core._reactor.joinRoom(toValue(this.id));
 
@@ -139,11 +139,7 @@ export class InstantSvelteRoom<
 			});
 		};
 
-		return {
-			get current() {
-				return publishTopic;
-			}
-		};
+		return publishTopic;
 	};
 
 	/**
