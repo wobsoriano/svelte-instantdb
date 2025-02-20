@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@instantdb/core':
-        specifier: ^0.17.19
-        version: 0.17.19
+        specifier: ^0.17.21
+        version: 0.17.21
     devDependencies:
       '@changesets/cli':
         specifier: ^2.27.11
@@ -330,8 +330,8 @@ packages:
     resolution: {integrity: sha512-c7hNEllBlenFTHBky65mhq8WD2kbN9Q6gk0bTk8lSBvc554jpXSkST1iePudpt7+A/AQvuHs9EMqjHDXMY1lrA==}
     engines: {node: '>=18.18'}
 
-  '@instantdb/core@0.17.19':
-    resolution: {integrity: sha512-F2stWW+ZG40go/r2UKmUhqQmx0H35ChMt68YX5oGkq/jBZm6bIVh/qgRYU7p0sXi8TWidxv4Vh+RZuAUWORMjw==}
+  '@instantdb/core@0.17.21':
+    resolution: {integrity: sha512-iYauRnK607AQIlWkeCI4vDCXnaI0k4HQOEvJOoWFZE4OBsCwtgY+58BXjQPZg4aJvISMhy9IYEibJwalxYyo1Q==}
 
   '@jridgewell/gen-mapping@0.3.5':
     resolution: {integrity: sha512-IzL8ZoEDIBRWEzlCcRhOaCupYyN5gdIK+Q6fbFdPDg6HqX6jpkItn7DFIpW9LQzXG6Df9sA7+OKnq0qlz/GaQg==}
@@ -1748,7 +1748,7 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.1': {}
 
-  '@instantdb/core@0.17.19':
+  '@instantdb/core@0.17.21':
     dependencies:
       mutative: 1.1.0
       uuid: 9.0.1
