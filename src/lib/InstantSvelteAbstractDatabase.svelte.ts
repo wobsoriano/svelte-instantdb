@@ -357,8 +357,40 @@ export default abstract class InstantSvelteAbstractDatabase<
 		this.storage = this._core.storage;
 	}
 
-	getLocalId = (name: string) => {
+	/**
+	 * Returns a unique ID for a given `name`. It's stored in local storage,
+	 * so you will get the same ID across sessions.
+	 *
+	 * This is useful for generating IDs that could identify a local device or user.
+	 *
+	 * @example
+	 *  const deviceId = await db.getLocalId('device');
+	 */
+	getLocalId = (name: string): Promise<string> => {
 		return this._core.getLocalId(name);
+	};
+
+	/**
+	 * A function that returns a unique ID for a given `name`. localIds are
+	 * stored in local storage, so you will get the same ID across sessions.
+	 *
+	 * Initially returns `null`, and then loads the localId.
+	 *
+	 * @example
+	 * const deviceId = db.useLocalId('device');
+	 * if (!deviceId) return null; // loading
+	 * console.log('Device ID:', deviceId)
+	 */
+	useLocalId = (name: MaybeGetter<string>): string | null => {
+		let localId = $state<string | null>(null);
+
+		$effect(() => {
+			untrack(async () => {
+				localId = await this.getLocalId(toValue(name));
+			});
+		});
+
+		return localId;
 	};
 
 	/**
