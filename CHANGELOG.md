@@ -1,5 +1,12 @@
 # svelte-instantdb
 
+## 0.4.14
+
+### Patch Changes
+
+- 6477b22: Bump @instantdb/core from 0.17.29 to 0.17.31
+- 9791baa: Add `useLocalId()` helper, a wrapper around `getLocalId` promise that returns a reactive state. Initially returns `null` and then loads the `localId`.
+
 ## 0.4.13
 
 ### Patch Changes
