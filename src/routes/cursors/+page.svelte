@@ -29,8 +29,9 @@
 		align-items: center;
 		justify-content: center;
 		overflow: hidden;
-		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
-			'Courier New', monospace;
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+			monospace;
 		font-size: 0.875rem;
 		color: #1f2937;
 	}
