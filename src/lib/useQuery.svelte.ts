@@ -33,8 +33,8 @@ export function useQueryInternal<
 }> {
 	const query = $derived.by(() => {
 		let finalQuery = toValue(_query);
-		if (toValue(_query) && _opts && 'ruleParams' in _opts) {
-			finalQuery = { $$ruleParams: _opts['ruleParams'], ...toValue(_query) };
+		if (finalQuery && _opts && 'ruleParams' in _opts) {
+			finalQuery = { $$ruleParams: _opts['ruleParams'], ...finalQuery };
 		}
 		return finalQuery ? coerceQuery(finalQuery) : null;
 	});
