@@ -1,5 +1,24 @@
 # svelte-instantdb
 
+## 0.4.17
+
+### Patch Changes
+
+- 5c06245: Bump @instantdb/core from 0.17.33 to 0.18.2
+- 3a1fedf: Support params in queries and transactions
+
+  Use in queries:
+
+  ```ts
+  db.useQuery({ docs: {} }, { secret: secret });
+  ```
+
+  and transactions:
+
+  ```ts
+  db.transact(db.tx.docs[id].ruleParams({ secret: secret }).update({ title: 'eat' }));
+  ```
+
 ## 0.4.16
 
 ### Patch Changes
