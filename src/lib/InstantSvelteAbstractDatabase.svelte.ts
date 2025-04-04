@@ -18,7 +18,8 @@ import {
 	type InstaQLResponse,
 	type RoomsOf,
 	type InstantSchemaDef,
-	type IInstantDatabase
+	type IInstantDatabase,
+	type InstaQLOptions
 } from '@instantdb/core';
 import { useQueryInternal } from './useQuery.svelte.js';
 import { useTimeout } from './useTimeout.svelte.js';
@@ -462,9 +463,10 @@ export default abstract class InstantSvelteAbstractDatabase<
 	 *  db.useQuery(auth.user ? { goals: {} } : null)
 	 */
 	useQuery = <Q extends InstaQLParams<Schema>>(
-		query: MaybeGetter<null | Q>
+		query: MaybeGetter<null | Q>,
+		opts?: InstaQLOptions
 	): ReactiveValue<InstaQLLifecycleState<Schema, Q>> => {
-		const state = $derived(useQueryInternal(this._core, query).current.state);
+		const state = $derived(useQueryInternal(this._core, query, opts).current.state);
 		return {
 			get current() {
 				return state;
