@@ -156,7 +156,7 @@ export class InstantSvelteRoom<
 
 			return {
 				peers: presence.peers,
-				isLoading: !!presence.isLoading,
+				isLoading: !!presence.isLoading
 			};
 		};
 

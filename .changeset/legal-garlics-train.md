@@ -8,13 +8,13 @@ Usage:
 
 ```svelte
 <script>
-  import { db } from './db';
-  import { SignedIn } from 'svelte-instantdb';
+	import { db } from './db';
+	import { SignedIn } from 'svelte-instantdb';
 
-  const user = db.useUser()
+	const user = db.useUser();
 </script>
 
 <SignedIn {db}>
-    <p>Logged in as: {user.email}</p>
+	<p>Logged in as: {user.email}</p>
 </SignedIn>
 ```
