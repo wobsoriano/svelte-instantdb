@@ -1,5 +1,30 @@
 # svelte-instantdb
 
+## 0.5.0
+
+### Minor Changes
+
+- a914366: Introduce `<SignedIn>` and `<SignedOut>` components
+
+  Usage:
+
+  ```svelte
+  <script>
+  	import { db } from './db';
+  	import { SignedIn } from 'svelte-instantdb';
+
+  	const user = db.useUser();
+  </script>
+
+  <SignedIn {db}>
+  	<p>Logged in as: {user.email}</p>
+  </SignedIn>
+  ```
+
+### Patch Changes
+
+- 9227cad: Bump @instantdb/core from 0.20.4 to 0.20.21
+
 ## 0.4.26
 
 ### Patch Changes
