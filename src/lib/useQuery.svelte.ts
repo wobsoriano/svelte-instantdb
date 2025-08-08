@@ -22,13 +22,14 @@ function stateForResult(result: any) {
 
 export function useQueryInternal<
 	Q extends InstaQLParams<Schema>,
-	Schema extends InstantSchemaDef<any, any, any>
+	Schema extends InstantSchemaDef<any, any, any>,
+	UseDates extends boolean
 >(
-	_core: InstantCoreDatabase<Schema>,
+	_core: InstantCoreDatabase<Schema, UseDates>,
 	_query: MaybeGetter<null | Q>,
 	_opts?: InstaQLOptions
 ): ReactiveValue<{
-	state: InstaQLLifecycleState<Schema, Q>;
+	state: InstaQLLifecycleState<Schema, Q, UseDates>;
 	query: any;
 }> {
 	const query = $derived.by(() => {
@@ -40,7 +41,7 @@ export function useQueryInternal<
 	});
 	const queryHash = $derived(weakHash(query));
 
-	const state = $state<InstaQLLifecycleState<Schema, Q>>(
+	const state = $state<InstaQLLifecycleState<Schema, Q, UseDates>>(
 		stateForResult(_core._reactor.getPreviousResult(query))
 	);
 
@@ -53,7 +54,7 @@ export function useQueryInternal<
 			return () => {};
 		}
 
-		const unsubscribe = _core.subscribeQuery<Q>(query, (result) => {
+		const unsubscribe = _core.subscribeQuery<Q, UseDates>(query, (result) => {
 			state.isLoading = !result;
 			state.data = result.data;
 			state.pageInfo = result.pageInfo;

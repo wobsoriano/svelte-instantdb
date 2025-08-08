@@ -1,5 +1,5 @@
 <script lang="ts" generics="RoomSchema extends RoomSchemaShape">
-	import { InstantSvelteRoom } from './InstantSvelteAbstractDatabase.svelte.js';
+	import { InstantSvelteRoom } from './InstantSvelteRoom.svelte.js';
 	import { type RoomSchemaShape } from '@instantdb/core';
 	import type { Snippet } from 'svelte';
 	import { toValue } from './utils.js';
