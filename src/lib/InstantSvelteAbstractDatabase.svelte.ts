@@ -18,7 +18,9 @@ import {
 	type RoomsOf,
 	type InstantSchemaDef,
 	type IInstantDatabase,
-	type InstaQLOptions
+	type InstaQLOptions,
+  InstantError,
+  type User
 } from '@instantdb/core';
 import { useQueryInternal } from './useQuery.svelte.js';
 import { toValue, type MaybeGetter, type ReactiveValue } from './utils.js';
@@ -239,6 +241,57 @@ export default abstract class InstantSvelteAbstractDatabase<
 			}
 		};
 	};
+
+	/**
+   * Subscribe to the currently logged in user.
+   * If the user is not logged in, this hook with throw an Error.
+   * You will want to protect any calls of this hook with a
+   * <SignedIn> component, or your own logic based on db.useAuth()
+   *
+   * @see https://instantdb.com/docs/auth
+   * @throws Error indicating user not signed in
+   * @example
+   * 	<script>
+	 *    import { db } from './db';
+	 *    import { SignedIn } from 'svelte-instantdb';
+	 *
+	 *    const user = db.useUser()
+	 *  </script>
+   *
+   *  <SignedIn {db}>
+   *   <div>Logged in as: {user.email}</div>
+   *  </SignedIn>
+   *
+   */
+	useUser = (): ReactiveValue<User> => {
+    const auth = this.useAuth();
+
+    if (auth.current.user) {
+      throw new InstantError(
+        'useUser must be used within an auth-protected route',
+      );
+    }
+
+		return {
+			get current() {
+				return auth.current.user;
+			}
+		};
+	};
+
+	/**
+   * One time query for the logged in state. This is useful
+   * for scenarios where you want to know the current auth
+   * state without subscribing to changes.
+   *
+   * @see https://instantdb.com/docs/auth
+   * @example
+   *   const user = await db.getAuth();
+   *   console.log('logged in as', user.email)
+   */
+  getAuth(): Promise<User | null> {
+    return this._core.getAuth();
+  }
 
 	/**
 	 * Listen for connection status changes to Instant. Use this for things like

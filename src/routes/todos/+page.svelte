@@ -72,8 +72,6 @@
 <main>
 	<h1>Svelte InstantDB Todo list</h1>
 
-	<db.SignedIn></db.SignedIn>
-
 	<form onsubmit={addTodo}>
 		<input bind:value={newTodo} placeholder="Enter a new task" />
 		<button type="submit">Add</button>
