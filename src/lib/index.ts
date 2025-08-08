@@ -34,17 +34,39 @@ import {
 	type ResolveAttrs,
 	type ValueTypes,
 	type InstaQLEntity,
+	type InstaQLFields,
 	type InstaQLResult,
+	type InstaQLEntitySubquery,
+	type RoomsOf,
+	type PresenceOf,
+	type TopicsOf,
+	type TopicOf,
+	type RoomHandle,
 	type InstantUnknownSchema,
 	type InstantSchemaDef,
 	type BackwardsCompatibleSchema,
-	type InstantRules
+	type InstantRules,
+	type UpdateParams,
+	type LinkParams,
+	type ExchangeCodeForTokenParams,
+	type SendMagicCodeParams,
+	type SendMagicCodeResponse,
+	type SignInWithIdTokenParams,
+	type VerifyMagicCodeParams,
+	type VerifyResponse,
+
+	// storage types
+	type FileOpts,
+	type UploadFileResponse,
+	type DeleteFileResponse
 } from '@instantdb/core';
 
-import InstantSvelteAbstractDatabase from './InstantSvelteAbstractDatabase.svelte.js';
-import InstantSvelteWebDatabase from './InstantSvelteWebDatabase.js';
+import InstantReactAbstractDatabase from './InstantSvelteAbstractDatabase.svelte.js';
+import InstantReactWebDatabase from './InstantSvelteWebDatabase.js';
 import { init, init_experimental } from './init.js';
 import Cursors from './Cursors.svelte';
+import SignedIn from './SignedIn.svelte';
+import SignedOut from './SignedOut.svelte';
 
 export {
 	id,
@@ -52,12 +74,12 @@ export {
 	lookup,
 	init,
 	init_experimental,
-	InstantSvelteWebDatabase,
+	InstantReactWebDatabase,
 	Cursors,
 	i,
 
 	// internal
-	InstantSvelteAbstractDatabase,
+	InstantReactAbstractDatabase,
 
 	// types
 	type Config,
@@ -74,6 +96,7 @@ export {
 	type InstantSchemaDatabase,
 	type IInstantDatabase,
 	type InstaQLParams,
+	type InstaQLFields,
 
 	// schema types
 	type AttrsDefs,
@@ -90,8 +113,31 @@ export {
 	type ValueTypes,
 	type InstaQLEntity,
 	type InstaQLResult,
+	type InstaQLEntitySubquery,
+	type RoomsOf,
+	type PresenceOf,
+	type TopicsOf,
+	type TopicOf,
+	type RoomHandle,
 	type InstantUnknownSchema,
 	type InstantSchemaDef,
 	type BackwardsCompatibleSchema,
-	type InstantRules
+	type InstantRules,
+	type UpdateParams,
+	type LinkParams,
+	type ExchangeCodeForTokenParams,
+	type SendMagicCodeParams,
+	type SendMagicCodeResponse,
+	type SignInWithIdTokenParams,
+	type VerifyMagicCodeParams,
+	type VerifyResponse,
+
+	// storage types
+	type FileOpts,
+	type UploadFileResponse,
+	type DeleteFileResponse,
+
+	// Components
+	SignedIn,
+	SignedOut
 };

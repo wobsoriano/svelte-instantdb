@@ -23,10 +23,13 @@ import VERSION from './version.js';
  *
  *  // To learn more: https://instantdb.com/docs/modeling-data
  */
-export function init<Schema extends InstantSchemaDef<any, any, any> = InstantUnknownSchema>(
-	config: InstantConfig<Schema>
-) {
-	return new InstantSvelteWebDatabase<Schema>(config, {
+export function init<
+	Schema extends InstantSchemaDef<any, any, any> = InstantUnknownSchema,
+	UseDates extends boolean = false
+>(
+	config: InstantConfig<Schema, UseDates>
+): InstantSvelteWebDatabase<Schema, InstantConfig<Schema, UseDates>> {
+	return new InstantSvelteWebDatabase<Schema, InstantConfig<Schema, UseDates>>(config, {
 		'svelte-instantdb': VERSION
 	});
 }

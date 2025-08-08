@@ -36,6 +36,30 @@ npm install svelte-instantdb
 {/if}
 ```
 
+### Reactive variables
+
+To make the helpers return reactive state, pass a function that returns a state instead:
+
+```ts
+let todoId = $state(null);
+
+const todoState = db.useQuery(() =>
+  todoId
+    ? {
+        todos: {
+          $: {
+            where: {
+              id: todoId
+            }
+          }
+        }
+      }
+    : null
+);
+
+todoId = 'some_id';
+```
+
 ### Cursors
 
 ```svelte
@@ -97,30 +121,6 @@ Custom cursors
     </div>
   </div>
 </div>
-```
-
-### Reactive variables
-
-To make functions return reactive state, pass a function that returns a state instead:
-
-```ts
-let todoId = $state(null);
-
-const todoState = db.useQuery(() =>
-  todoId
-    ? {
-        todos: {
-          $: {
-            where: {
-              id: todoId
-            }
-          }
-        }
-      }
-    : null
-);
-
-todoId = 'some_id';
 ```
 
 ## License
