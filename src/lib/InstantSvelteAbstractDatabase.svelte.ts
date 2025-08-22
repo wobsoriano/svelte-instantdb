@@ -20,6 +20,7 @@ import {
 	type IInstantDatabase,
 	type InstaQLOptions,
 	InstantError,
+	ValidQuery,
 	type User
 } from '@instantdb/core';
 import { useQueryInternal } from './useQuery.svelte.js';
@@ -184,7 +185,7 @@ export default abstract class InstantSvelteAbstractDatabase<
 	 *  // skip if `user` is not logged in
 	 *  db.useQuery(auth.user ? { goals: {} } : null)
 	 */
-	useQuery = <Q extends InstaQLParams<Schema>>(
+	useQuery = <Q extends ValidQuery<Q, Schema>>(
 		query: MaybeGetter<null | Q>,
 		opts?: InstaQLOptions
 	): ReactiveValue<InstaQLLifecycleState<Schema, Q, NonNullable<Config['useDateObjects']>>> => {
@@ -349,7 +350,7 @@ export default abstract class InstantSvelteAbstractDatabase<
 	 *  const resp = await db.queryOnce({ goals: {} });
 	 *  console.log(resp.data.goals)
 	 */
-	queryOnce = <Q extends InstaQLParams<Schema>>(
+	queryOnce = <Q extends ValidQuery<Q, Schema>>(
 		query: Q
 	): Promise<{
 		data: InstaQLResponse<Schema, Q, Config['useDateObjects']>;
