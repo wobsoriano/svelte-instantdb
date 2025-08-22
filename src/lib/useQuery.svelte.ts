@@ -5,7 +5,8 @@ import {
 	InstantCoreDatabase,
 	type InstaQLLifecycleState,
 	type InstantSchemaDef,
-	type InstaQLOptions
+	type InstaQLOptions,
+	type ValidQuery
 } from '@instantdb/core';
 
 import { toValue, type MaybeGetter, type ReactiveValue } from './utils.js';
@@ -21,7 +22,7 @@ function stateForResult(result: any) {
 }
 
 export function useQueryInternal<
-	Q extends InstaQLParams<Schema>,
+	Q extends ValidQuery<Q, Schema>,
 	Schema extends InstantSchemaDef<any, any, any>,
 	UseDates extends boolean
 >(
