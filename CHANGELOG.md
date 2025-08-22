@@ -1,5 +1,13 @@
 # svelte-instantdb
 
+## 0.5.2
+
+### Patch Changes
+
+- 6419664: Bump @instantdb/core from 0.21.0 to 0.21.5
+- 83f55be: Add strict query validation
+- ddd7e3d: Make useLocalId return a reactive property
+
 ## 0.5.1
 
 ### Patch Changes
