@@ -8,7 +8,6 @@ import {
 	type TransactionChunk,
 	type PresenceResponse,
 	type RoomSchemaShape,
-	type InstaQLParams,
 	type InstantConfig,
 	type PageInfoResponse,
 	InstantCoreDatabase,
@@ -20,7 +19,7 @@ import {
 	type IInstantDatabase,
 	type InstaQLOptions,
 	InstantError,
-	ValidQuery,
+	type ValidQuery,
 	type User
 } from '@instantdb/core';
 import { useQueryInternal } from './useQuery.svelte.js';
@@ -105,7 +104,7 @@ export default abstract class InstantSvelteAbstractDatabase<
 	 * if (!deviceId) return null; // loading
 	 * console.log('Device ID:', deviceId)
 	 */
-	useLocalId = (name: MaybeGetter<string>): string | null => {
+	useLocalId = (name: MaybeGetter<string>): ReactiveValue<string | null> => {
 		let localId = $state<string | null>(null);
 
 		$effect(() => {
@@ -114,7 +113,11 @@ export default abstract class InstantSvelteAbstractDatabase<
 			});
 		});
 
-		return localId;
+		return {
+		  get current() {
+        return localId;
+      }
+		};
 	};
 
 	/**
