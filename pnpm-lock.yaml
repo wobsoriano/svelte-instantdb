@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@instantdb/core':
-        specifier: ^0.21.11
-        version: 0.21.11
+        specifier: ^0.21.13
+        version: 0.21.13
     devDependencies:
       '@changesets/cli':
         specifier: ^2.28.1
@@ -340,11 +340,11 @@ packages:
     resolution: {integrity: sha512-xeO57FpIu4p1Ri3Jq/EXq4ClRm86dVF2z/+kvFnyqVYRavTZmaFaUBbWCOuuTh0o/g7DSsk6kc2vrS4Vl5oPOQ==}
     engines: {node: '>=18.18'}
 
-  '@instantdb/core@0.21.11':
-    resolution: {integrity: sha512-GjjsM/v8nzQiwh1CZKhRkBLeXY1x/OEPx0DQsjIKVIAARiE2/eY/xJ6hjLGsUarXvvQiVsJDos3ElYyzHQjHEw==}
+  '@instantdb/core@0.21.13':
+    resolution: {integrity: sha512-TtiXU4iV8ASTz+usviHupN85ZNGvMMVG4y4ADvzrwwx0Rif1aoRaKMnhffgOKXJK+bfQH6RKN/p5jODEwhVV/A==}
 
-  '@instantdb/version@0.21.11':
-    resolution: {integrity: sha512-2U8Oa4NDeRHPYuo/rFmvxODwFZZ0A2DXmW5WbgTpu+v8igbJJts12in+f+L69e812O2sAtwSzg+8OPBeIGKbSA==}
+  '@instantdb/version@0.21.13':
+    resolution: {integrity: sha512-7sJzQpfipsZdlR0m8xGgjQx9toHooJ132JvkiH4bPFRKXsi5W8ACfvRPJVy8MnWq9qInR0C5JB3cHtjDruApuA==}
 
   '@jridgewell/gen-mapping@0.3.5':
     resolution: {integrity: sha512-IzL8ZoEDIBRWEzlCcRhOaCupYyN5gdIK+Q6fbFdPDg6HqX6jpkItn7DFIpW9LQzXG6Df9sA7+OKnq0qlz/GaQg==}
@@ -1725,13 +1725,13 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.2': {}
 
-  '@instantdb/core@0.21.11':
+  '@instantdb/core@0.21.13':
     dependencies:
-      '@instantdb/version': 0.21.11
+      '@instantdb/version': 0.21.13
       mutative: 1.2.0
       uuid: 11.1.0
 
-  '@instantdb/version@0.21.11': {}
+  '@instantdb/version@0.21.13': {}
 
   '@jridgewell/gen-mapping@0.3.5':
     dependencies:
