@@ -61,7 +61,7 @@
   "types": "./dist/index.d.ts",
   "type": "module",
   "dependencies": {
-    "@instantdb/core": "^0.21.24"
+    "@instantdb/core": "^0.22.1"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
