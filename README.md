@@ -2,6 +2,10 @@
 
 Unofficial [Instant](http://instantdb.com/) SDK for Svelte 5.
 
+> [!IMPORTANT]
+> InstantDB now has an official Svelte SDK.
+> Please migrate to the official SDK instead: https://www.instantdb.com/docs/start-svelte
+
 ## Installation
 
 ```bash
